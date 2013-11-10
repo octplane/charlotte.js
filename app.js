@@ -9,6 +9,8 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var security = require('./security');
+var db = require('./db');
+var configuration = require('./configuration');
 
 var app = express();
 
@@ -55,7 +57,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', security.logged_only, routes.index);
+app.get('/', configuration.ready, security.logged_only, routes.index);
 app.get('/users', user.list);
 
 app.get('/login', security.login_view);

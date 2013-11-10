@@ -1,6 +1,3 @@
-var users = {
-  admin: { name: 'Administrator' }
-};
 
 function authenticate(name, pass, fn) {
   console.log('authenticating %s:%s', name, pass);
