@@ -7,6 +7,7 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
   // load all grunt tasks
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-recess');
 
   var reloadPort = 35729, files;
 
@@ -33,6 +34,18 @@ module.exports = function (grunt) {
       ejs: {
         files: ['app/views/**/*.ejs'],
         options: { livereload: reloadPort }
+      },
+      recess: {
+        files: ['app/less/{,*/}*.less'],
+        tasks: ['recess:dist']
+      }
+    },
+    recess: {
+      dist: {
+        options: {
+          compile: true
+        },
+        files: { 'public/css/app.css' : ['app/less/{,*/}*.less'] }
       }
     }
   });
@@ -55,5 +68,5 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('default', ['develop', 'watch']);
+  grunt.registerTask('default', ['develop', 'recess', 'watch']);
 };
