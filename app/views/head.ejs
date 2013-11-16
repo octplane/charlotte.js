@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title><%= title || "Charlotte.js" %></title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        font-family:"proxima-nova", sans-serif;
+        text-align: justify;
+      }
+      .search-panel.hidden {
+        position: relative;
+        top: -50px;
+      }
+      .comment-zone {
+        font-size: 18px;
+        line-height: 30px;
+        padding: 20px;
+        -webkit-font-smoothing: antialiased;
+      }
+      .search, .search-tag {
+        width: 15em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><i class="fa fa-home"></i> Charlotte</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="/"><i class="fa fa-question"></i>&nbsp;About</a>
+            </li>
+            <li>
+              <a href="#about"><i class="fa fa-lock"></i>&nbsp;Login</a>
+            </li>
+            <li>
+              <a href="#contact"><i class="fa fa-rss"></i>&nbsp;RSS Feed</a>
+            </li>
+            <li>
+              <a href="#contact"><i class="fa fa-cloud"></i>&nbsp;Tag Cloud</a>
+            </li>
+            <li>
+              <a href="#about" class="log-out-link"><i class="fa fa-unlock"></i>&nbsp;Log out</a>
+            </li>
+          </ul>
+        </div>
+  <!--/.navbar-collapse -->
+      </div>
+    </div>
+    <div class="container">
+      <div class="well search-panel hidden">
+        <div class="row">
+          <div class="col-xs-6 col-lg-4 col-lg-offset-2">
+            <form action="/search" class="form-inline">
+              <input type="text" class="form-control input-sm search" maxlength="200" placeholder="your search string">
+              <button class="btn btn-success btn-sm">Search</button>
+            </form>
+          </div>
+          <div class="col-xs-1 col-lg-4">
+            <form action="/search" class="form-inline">
+              <input type="text" class="form-control input-sm search-tag" maxlength="200" placeholder="your search string">
+              <button class="btn btn-success btn-sm">Filter by tag</button>
+            </form>
+          </div>
+        </div>
+        <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
+      </div>

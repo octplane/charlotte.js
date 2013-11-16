@@ -14,8 +14,19 @@ if(!fs.existsSync(db_path)) {
   fs.mkdirSync(db_path, "0700");
 }
 
-var nosql = require('nosql').load(db_file);
+var db = require('nosql').load(db_file);
 
-nosql.custom({configured:true});
+if(!db.custom() || !db.custom().configure) {
+	console.log("Setting unconfigured flag");
+	db.custom({configured:false});
+}
+exports.current = db;
 
-exports.current = nosql;
+
+exports.ready = function(req, res, next) {
+  if(db.custom().configured) {
+    next()
+  } else {
+    res.render('misc/configure');
+  }
+};
