@@ -34,27 +34,26 @@
   <body>
     <div class="row top-bar">
       <div class="row middle">
-        <a class="col logo" href="#"><i class="fa fa-home"></i><span class="t">Charlotte</span></a>
-        <a class="col" href="/"><i class="fa fa-question"></i><span class="t">About</span></a>
-        <a class="col" href="#about"><i class="fa fa-lock"></i><span class="t">Login</span></a>
-        <a class="col" href="#contact"><i class="fa fa-rss"></i><span class="t">RSS Feed</span></a>
-        <a class="col" href="#contact"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
+        <a class="col logo" href="#" title="home"><i class="fa fa-home"></i><span class="t">Charlotte</span></a>
+        <a class="col" href="/" title="About"><i class="fa fa-question"></i><span class="t">About</span></a>
+        <a class="col" href="#about" title="Login"><i class="fa fa-lock"></i><span class="t">Login</span></a>
+        <a class="col" href="#contact" title="RSS"><i class="fa fa-rss"></i><span class="t">RSS Feed</span></a>
+        <a class="col" href="#contact" title="Tag Cloud"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
 <!--         <a class="col" href="#about" class="log-out-link"><i class="fa fa-unlock"></i><span class="t">Log out</span></a>
- -->      </div>
+ -->
+      </div>
     </div>
     <div class="row search-panel">
-      <div class="col by-text">
-        <form action="/search" class="form-inline">
-          <input type="text" class="form-control input-sm search" maxlength="200" placeholder="your search string">
-          <button class="btn btn-success btn-sm">Search</button>
-        </form>
-      </div>
-      <div class="col by-tag">
-        <form action="/search" class="form-inline">
-          <input type="text" class="form-control input-sm search-tag" maxlength="200" placeholder="your search string">
-          <button class="btn btn-success btn-sm">Filter by tag</button>
-        </form>
-      </div>
-      <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
-    </div>
+      <form action="/search" class="col search-form">
+        <input type="text" maxlength="200" placeholder="your search string">
+        <div class="search-arrow"></div>
+        <button class="btn btn-success btn-sm"><i class="fa fa-search"></i></button>
+      </form>
+      <form action="/search" class="col search-form">
+        <input type="text" maxlength="200" placeholder="your search string">
+        <div class="search-arrow"></div>
+        <button class="btn btn-success btn-sm"><i class="fa fa-tag"></i></button>
+      </form>
+<!--       <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
+ -->    </div>
     <div class="container">
