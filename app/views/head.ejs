@@ -4,7 +4,6 @@
   <head>
     <title><%= title || "Charlotte.js" %></title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/app.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -33,32 +32,29 @@
     </style>
   </head>
   <body>
-      <div class="row top-bar">
-        <div class="row middle">
-          <a class="col logo" href="#"><i class="fa fa-home"></i> Charlotte</a>
-          <a class="col" href="/"><i class="fa fa-question"></i>&nbsp;About</a>
-          <a class="col" href="#about"><i class="fa fa-lock"></i>&nbsp;Login</a>
-          <a class="col" href="#contact"><i class="fa fa-rss"></i>&nbsp;RSS Feed</a>
-          <a class="col" href="#contact"><i class="fa fa-cloud"></i>&nbsp;Tag Cloud</a>
-          <a class="col" href="#about" class="log-out-link"><i class="fa fa-unlock"></i>&nbsp;Log out</a>
-        </div>
+    <div class="row top-bar">
+      <div class="row middle">
+        <a class="col logo" href="#"><i class="fa fa-home"></i><span class="t">Charlotte</span></a>
+        <a class="col" href="/"><i class="fa fa-question"></i><span class="t">About</span></a>
+        <a class="col" href="#about"><i class="fa fa-lock"></i><span class="t">Login</span></a>
+        <a class="col" href="#contact"><i class="fa fa-rss"></i><span class="t">RSS Feed</span></a>
+        <a class="col" href="#contact"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
+<!--         <a class="col" href="#about" class="log-out-link"><i class="fa fa-unlock"></i><span class="t">Log out</span></a>
+ -->      </div>
+    </div>
+    <div class="row search-panel">
+      <div class="col by-text">
+        <form action="/search" class="form-inline">
+          <input type="text" class="form-control input-sm search" maxlength="200" placeholder="your search string">
+          <button class="btn btn-success btn-sm">Search</button>
+        </form>
       </div>
+      <div class="col by-tag">
+        <form action="/search" class="form-inline">
+          <input type="text" class="form-control input-sm search-tag" maxlength="200" placeholder="your search string">
+          <button class="btn btn-success btn-sm">Filter by tag</button>
+        </form>
+      </div>
+      <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
+    </div>
     <div class="container">
-
-      <div class="well search-panel hidden">
-        <div class="row">
-          <div class="col-xs-6 col-lg-4 col-lg-offset-2">
-            <form action="/search" class="form-inline">
-              <input type="text" class="form-control input-sm search" maxlength="200" placeholder="your search string">
-              <button class="btn btn-success btn-sm">Search</button>
-            </form>
-          </div>
-          <div class="col-xs-1 col-lg-4">
-            <form action="/search" class="form-inline">
-              <input type="text" class="form-control input-sm search-tag" maxlength="200" placeholder="your search string">
-              <button class="btn btn-success btn-sm">Filter by tag</button>
-            </form>
-          </div>
-        </div>
-        <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
-      </div>
