@@ -52,7 +52,7 @@ body {
 		a {
 			i {
 				display: inline;
-				font-size: 1em;
+				font-size: 1.3em;
 			}
 			.t { display: inline;}
 		}
@@ -114,12 +114,14 @@ body {
 		width: @top-search-width;
 		margin-left: auto;
 		margin-right: auto;
-		font-size: 1.3em;
+		input {
+			font-size: 1.3em;
+		}
 		.search-form {
 			position: relative;
 			width: 50%;
 			@height: 24px;
-			@border: 1px;
+			@border: 2px;
 			input {
 				width: 100%;
 				padding: 0;
@@ -141,22 +143,22 @@ body {
 
 			button:after {
 				border-color: rgba(136, 183, 213, 0);
-				border-right-color: #88b7d5;
+				border-right-color: #FF7777; //#88b7d5;
 				border-width: 10px;
 				margin-top: -10px;
 			}
 			button:before {
 				border-color: rgba(194, 225, 245, 0);
-				border-right-color: #c2e1f5;
+				border-right-color: blue; // #c2e1f5;
 				border-width: 12px;
 				margin-top: -12px;
 			}
 			button {
-				background-color: #88b7d5;
-				border-color: #c2e1f5;
+				background-color: #FF7777;
+				border-color: blue; // //#c2e1f5;
 				height: @height;
 				position: absolute;
-				width: 32px;
+				width: 33px;
 				padding-right: 12px;
 				top: 0px;
 				right: 0px;
