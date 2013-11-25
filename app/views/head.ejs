@@ -10,35 +10,15 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//localhost:35729/livereload.js"></script>
-    <style type="text/css">
-      body {
-        padding-bottom: 20px;
-        font-family:"proxima-nova", sans-serif;
-        text-align: justify;
-      }
-      .search-panel.hidden {
-        position: relative;
-        top: -50px;
-      }
-      .comment-zone {
-        font-size: 18px;
-        line-height: 30px;
-        padding: 20px;
-        -webkit-font-smoothing: antialiased;
-      }
-      .search, .search-tag {
-        width: 15em;
-      }
-    </style>
   </head>
   <body>
     <div class="row top-bar">
       <div class="row middle">
-        <a class="col logo" href="#" title="home"><i class="fa fa-home"></i><span class="t">Charlotte</span></a>
+        <a class="col logo" href="#" title="home"><i class="fa fa-home"></i><span class="t">Charlotte <span class="c">with <%= links_count %> links</span></span></a>
         <a class="col" href="/" title="About"><i class="fa fa-question"></i><span class="t">About</span></a>
         <a class="col" href="#about" title="Login"><i class="fa fa-lock"></i><span class="t">Login</span></a>
-        <a class="col" href="#contact" title="RSS"><i class="fa fa-rss"></i><span class="t">RSS Feed</span></a>
         <a class="col" href="#contact" title="Tag Cloud"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
+        <a class="col" href="#contact" title="Picture Wall"><i class="fa fa-picture-o"></i><span class="t">Picture Wall</span></a>
 <!--         <a class="col" href="#about" class="log-out-link"><i class="fa fa-unlock"></i><span class="t">Log out</span></a>
  -->
       </div>

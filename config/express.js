@@ -13,6 +13,8 @@ module.exports = function(app, config) {
     app.use(express.methodOverride());
     app.use(express.cookieParser('mycookiesecret'));
     app.use(express.session());
+    // Custom Middlewares
+
     // Session-persisted message middleware
     app.use(function(req, res, next){
       var err = req.session.error
@@ -25,6 +27,13 @@ module.exports = function(app, config) {
       if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
       next();
     });
+    app.use(function(req, res, next) {
+      res.locals.links_count = 12;
+
+      next();
+    });
+
+    // Inject current user
     app.use(function(req, res, next){
       if(req.session.user) {
         res.locals.me = req.session.user;
@@ -33,11 +42,15 @@ module.exports = function(app, config) {
       }
       next();
     });
+
     // development only
     if ('development' == app.get('env')) {
       app.use(express.errorHandler());
     }
+
+    // Main routing table
     app.use(app.router);
+
     // And the 404 finally
     app.use(function(req, res) {
       res.status(404).render('misc/404', { title: '404' });
