@@ -111,60 +111,6 @@ body {
 	}
 }
 
-@media only screen and (min-width: 820px) {
-	.search-panel {
-		width: @top-search-width;
-		margin-left: auto;
-		margin-right: auto;
-		input {
-			font-size: 1.3em;
-		}
-		.search-form {
-			position: relative;
-			width: 50%;
-			@height: 24px;
-			@border: 2px;
-			input {
-				width: 100%;
-				padding: 0;
-				margin: 0;
-				border: 0;
-				height: @height - 2*@border;
-				//border: 1px solid black;
-			}
-			button:after, button:before {
-				right: 100%;
-				top: 50%;
-				border: solid transparent;
-				content: " ";
-				height: 0;
-				width: 0;
-				position: absolute;
-				pointer-events: none;
-			}
 
-			button:after {
-				border-color: rgba(136, 183, 213, 0);
-				border-right-color: #FF7777; //#88b7d5;
-				border-width: 10px;
-				margin-top: -10px;
-			}
-			button:before {
-				border-color: rgba(194, 225, 245, 0);
-				border-right-color: blue; // #c2e1f5;
-				border-width: 12px;
-				margin-top: -12px;
-			}
-			button {
-				background-color: #FF7777;
-				border-color: blue; // //#c2e1f5;
-				height: @height;
-				position: absolute;
-				width: 33px;
-				padding-right: 12px;
-				top: 0px;
-				right: 0px;
-			}
-		}
-	}
+@media only screen and (min-width: 820px) {
 }

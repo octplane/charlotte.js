@@ -9,6 +9,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="//localhost:35729/livereload.js"></script>
   </head>
   <body>
@@ -23,17 +24,5 @@
  -->
       </div>
     </div>
-    <div class="row search-panel">
-      <form action="/search" class="col search-form">
-        <input type="text" maxlength="200" placeholder="your search string">
-        <div class="search-arrow"></div>
-        <button class="btn btn-success btn-sm"><i class="fa fa-search"></i></button>
-      </form>
-      <form action="/search" class="col search-form">
-        <input type="text" maxlength="200" placeholder="your search string">
-        <div class="search-arrow"></div>
-        <button class="btn btn-success btn-sm"><i class="fa fa-tag"></i></button>
-      </form>
-<!--       <a class="btn open-search-button pull-right btn-default btn-lg"><i class="fa fa-search"></i></a>
- -->    </div>
+    <% include search %>
     <div class="container">
