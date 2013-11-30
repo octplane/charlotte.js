@@ -54,16 +54,45 @@ form.configure .it input:focus {
 }
 
 form.configure .te {
-  position: absolute;
-  top: 6px;
   height: 20px;
   font-size: 12px;
   font-weight: bolder;
   color: #222222;
-  background-color: #ff0000;
   border: 0;
   border-radius: 3px;
-  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #ff3333;
+}
+
+form.configure .te:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+form.configure .btn {
+  height: 20px;
+  font-size: 12px;
+  font-weight: bolder;
+  color: #222222;
+  border: 0;
+  border-radius: 3px;
+}
+
+form.configure .btn:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+form.configure .btn.green {
+  background-color: #00cc00;
+  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #44ff33;
+}
+
+form.configure .btn.green[disabled],
+form.configure .btn.green[disabled]:hover {
+  background-color: #22ee22;
+  box-shadow: none;
+}
+
+form.configure .te {
+  position: absolute;
+  top: 6px;
 }
 
 form.configure .it.button-right .te {
@@ -74,17 +103,47 @@ form.configure .it.button-left .te {
   left: 6px;
 }
 
-form.configure .te:hover {
-  color: white;
-  box-shadow: 1px 1px 0px 0px #222222, 0 -2px 1px 1px #222222;
-}
-
 form.configure .te.icon {
   width: 20px;
 }
 
 form.configure .it.button-left input[type=text] {
   margin-left: 32px;
+}
+
+form.configure .alert {
+  margin-top: 10px;
+  color: black;
+  background-color: red;
+  border: 1px solid #dd0000;
+}
+
+form.configure .alert button.close {
+  background-color: red;
+  border: 0;
+  border-right: 1px solid #dd0000;
+}
+
+form.configure .alert button.close:hover {
+  background-color: #dd0000;
+}
+
+form.configure .alert button.close:focus {
+  outline: 0;
+  -webkit-box-shadow: none !important;
+     -moz-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+form.configure .te {
+  background-color: #d3d3d3;
+  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #ffffff;
+}
+
+form.configure .te[disabled],
+form.configure .te[disabled]:hover {
+  background-color: #f5f5f5;
+  box-shadow: none;
 }
 
 form.configure h1 {
@@ -96,6 +155,14 @@ form.configure h1 {
 
 form.configure .padded {
   padding: 10px;
+}
+
+form.configure .button-row-right {
+  height: 20px;
+}
+
+form.configure .button-row-right .btn {
+  float: right;
 }
 
 form.configure .form-group {
@@ -117,7 +184,117 @@ form.configure .form-group .controls {
   padding-top: 50px;
 }
 
+.it {
+  position: relative;
+  height: 32px;
+  margin: 10px;
+  color: white;
+  background-image: linear-gradient(to right, #222222, #2a2a2a);
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 0px 0px rgba(230, 230, 230, 0.3), 0 -1px 0px 1px #222222;
+}
 
+.it input[type=text] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 16px;
+  font-size: 12px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+}
+
+.it input:focus {
+  outline: 0;
+  -webkit-box-shadow: none !important;
+     -moz-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.te {
+  height: 20px;
+  font-size: 12px;
+  font-weight: bolder;
+  color: #222222;
+  border: 0;
+  border-radius: 3px;
+}
+
+.te:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+.btn {
+  height: 20px;
+  font-size: 12px;
+  font-weight: bolder;
+  color: #222222;
+  border: 0;
+  border-radius: 3px;
+}
+
+.btn:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+.btn.green {
+  background-color: #00cc00;
+  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #44ff33;
+}
+
+.btn.green[disabled],
+.btn.green[disabled]:hover {
+  background-color: #22ee22;
+  box-shadow: none;
+}
+
+.te {
+  position: absolute;
+  top: 6px;
+}
+
+.it.button-right .te {
+  right: 6px;
+}
+
+.it.button-left .te {
+  left: 6px;
+}
+
+.te.icon {
+  width: 20px;
+}
+
+.it.button-left input[type=text] {
+  margin-left: 32px;
+}
+
+.alert {
+  margin-top: 10px;
+  color: black;
+  background-color: red;
+  border: 1px solid #dd0000;
+}
+
+.alert button.close {
+  background-color: red;
+  border: 0;
+  border-right: 1px solid #dd0000;
+}
+
+.alert button.close:hover {
+  background-color: #dd0000;
+}
+
+.alert button.close:focus {
+  outline: 0;
+  -webkit-box-shadow: none !important;
+     -moz-box-shadow: none !important;
+          box-shadow: none !important;
+}
 
 .noisy {
   background-color: black;
@@ -544,16 +721,45 @@ table {
 }
 
 .search .te {
-  position: absolute;
-  top: 6px;
   height: 20px;
   font-size: 12px;
   font-weight: bolder;
   color: #222222;
-  background-color: #dd0000;
   border: 0;
   border-radius: 3px;
-  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #ff3333;
+}
+
+.search .te:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+.search .btn {
+  height: 20px;
+  font-size: 12px;
+  font-weight: bolder;
+  color: #222222;
+  border: 0;
+  border-radius: 3px;
+}
+
+.search .btn:hover {
+  box-shadow: -1px -1px 2px 0px #222222;
+}
+
+.search .btn.green {
+  background-color: #00cc00;
+  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #44ff33;
+}
+
+.search .btn.green[disabled],
+.search .btn.green[disabled]:hover {
+  background-color: #22ee22;
+  box-shadow: none;
+}
+
+.search .te {
+  position: absolute;
+  top: 6px;
 }
 
 .search .it.button-right .te {
@@ -564,17 +770,47 @@ table {
   left: 6px;
 }
 
-.search .te:hover {
-  color: white;
-  box-shadow: 1px 1px 0px 0px #222222, 0 -2px 1px 1px #222222;
-}
-
 .search .te.icon {
   width: 20px;
 }
 
 .search .it.button-left input[type=text] {
   margin-left: 32px;
+}
+
+.search .alert {
+  margin-top: 10px;
+  color: black;
+  background-color: red;
+  border: 1px solid #dd0000;
+}
+
+.search .alert button.close {
+  background-color: red;
+  border: 0;
+  border-right: 1px solid #dd0000;
+}
+
+.search .alert button.close:hover {
+  background-color: #dd0000;
+}
+
+.search .alert button.close:focus {
+  outline: 0;
+  -webkit-box-shadow: none !important;
+     -moz-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.search .te {
+  background-color: #ff0000;
+  box-shadow: 1px 1px 2px 0px #000000, 0 -1px 0px 0px #ff3333;
+}
+
+.search .te[disabled],
+.search .te[disabled]:hover {
+  background-color: #ff2222;
+  box-shadow: none;
 }
 
 .search .it {

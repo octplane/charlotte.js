@@ -8,18 +8,11 @@ form.configure {
     margin-right: auto;
     border-radius: 4px;
 
-
-	@dark: #222;
-	@light-background-gradient-end: #2A2A2A;
-	@input-corner-radius: 4px;
-	@button-corner-radius: 3px;
-	@input-height: 32px;
-	@translucent-light: rgba(230, 230, 230, 0.3);
-	@transparent: rgba(255,255,255,0);
-	@font-size: 12px;
-	@button-background: red;
-
 	@import "forms";
+
+	.te {
+		.button-color(lightgrey);
+	}
 
 	h1 {
 		text-align: center;
@@ -33,6 +26,12 @@ form.configure {
 	text-shadow: 1px 1px 1px rgba(100, 100, 100, 0.5);
 	.padded {
 		padding: 10px;
+	}
+	.button-row-right {
+		height: 20px;
+		.btn {
+			float: right;
+		}
 	}
 
 	.form-group {

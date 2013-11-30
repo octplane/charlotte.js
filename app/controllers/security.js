@@ -15,7 +15,7 @@ function authenticate(name, pass, fn) {
 }
 
 exports.login = function(req, res) {
-  authenticate(req.body.username, req.body.password, function(err, user){
+  authenticate(req.body.username, req.body.password, function(err, user) {
     if (user) {
       // Regenerate session when signing in
       // to prevent fixation

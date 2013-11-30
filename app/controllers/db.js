@@ -22,7 +22,7 @@ if(!db.custom() || !db.custom().configure) {
 }
 exports.current = db;
 
-
+// If the database is ready, jump to next view. Or else jump to configuration view.
 exports.ready = function(req, res, next) {
   if(db.custom().configured) {
     next()
@@ -30,3 +30,9 @@ exports.ready = function(req, res, next) {
     res.render('misc/configure');
   }
 };
+
+exports.configure = function(req, res) {
+  console.log(req.body.username);
+  var msg = 'Passwords plop';
+  res.render('misc/configure', {message: msg});
+}

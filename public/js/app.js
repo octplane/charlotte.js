@@ -20,6 +20,11 @@ $(document).on("click", "button.te", function() {
     updateButton($(this).parent())
 });
 
+$(document).on("click", "button.close", function() {
+    $(this).parent().hide();
+});
+
+
 $(document).on("input", "input[type=text].erasable", function() {
     updateButton($(this).parent());
 });
