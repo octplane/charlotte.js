@@ -2,10 +2,17 @@
 
 function updateButton(parent) {
     var button = $(parent).find("button.te");
+    var isHint = button.attr("data-hint-value");
     if( $(parent).find("input[type=text]").val() == "") {
-        button.text(button.attr("data-non-empty-value"));
+    	if(isHint) {
+	        button.text(isHint);
+	    } else {
+	        button.text("\u2716");
+	    	button.attr("disabled", "");
+	    }
     } else {
         button.text("\u2716");
+    	button.removeAttr("disabled", "");
     }
 }
 $(document).on("click", "button.te", function() {
@@ -16,3 +23,9 @@ $(document).on("click", "button.te", function() {
 $(document).on("input", "input[type=text].erasable", function() {
     updateButton($(this).parent());
 });
+
+$(function() {
+	$("input[type=text].erasable").each(function() {
+		updateButton($(this).parent());
+	});
+})

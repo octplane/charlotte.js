@@ -2,111 +2,28 @@
 
 .search {
     width: 600px;
-    height: 64px;
+    height: 54px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     .noisy;
-    .metal;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
 
-}
+    @dark: #222;
+    @light-background-gradient-end: #2A2A2A;
+    @input-corner-radius: 4px;
+    @button-corner-radius: 3px;
+    @input-height: 32px;
+    @translucent-light: rgba(230, 230, 230, 0.3);
+    @transparent: rgba(255,255,255,0);
+    @font-size: 12px;
+    @button-background: #D00;
 
-.layer {
-    position:absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    padding: 5px;
-}
+    @import "forms";
 
-@dark: #222;
-@light-background-gradient-end: #2A2A2A;
-@input-corner-radius: 4px;
-@button-corner-radius: 3px;
-@input-height: 32px;
-@translucent-light: rgba(230, 230, 230, 0.3);
-@transparent: rgba(255,255,255,0);
-@font-size: 12px;
-@button-background: #C00;
-
-.it {
-    border: 0px;
-    border-radius: @input-corner-radius;
-    height: @input-height;
-    background-image: linear-gradient(to right, @dark, @light-background-gradient-end);
-    color: white;
-    box-shadow:
-        0 1px 0px 0px @translucent-light,
-        0 -1px 0px 1px  @dark;
-    position:relative;
-    margin: 10px;
-    width: 45%;
-    float: left;
-}
-
-.it input[type=text] {
-    position: absolute;
-    top: 0px;
-    left: @input-height / 2;
-    right: 0px;
-    bottom: 0px;
-    color: white;
-    background-color: @transparent;
-    border: 0px;
-    font-size: @font-size;
-}
-
-
-.it {
-    input:focus {
-        -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        outline: 0px;
+    .it {
+        width: 45%;
+        float: left;
     }
-}
-
-.te {
-    position: absolute;
-    font-weight: bolder;
-    box-shadow:
-        1px 1px 2px 0px black,
-        0 -1px 0px 0px @button-background+#433;
-
-    top: 6px;
-    height: 20px;
-    background-color: @button-background;
-    color: @dark;
-    border: 0px;
-    font-size: @font-size;
-    border-radius: @button-corner-radius;
-}
-
-.it.right .te {
-    right: 6px;
-}
-
-.it.left .te {
-    left: 6px;
-}
-
-.te:hover {
-    color: white;
-    box-shadow: 1px 1px 0px 0px @dark,
-        0 -2px 1px 1px @dark;
-}
-
-.te.icon {
-    width: 20px;
-}
-
-.te.large {
-
-}
-
-.it.left input[type=text] {
-    margin-left: @input-height;
 }

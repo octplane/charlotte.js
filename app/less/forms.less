@@ -1,0 +1,78 @@
+
+
+.it {
+    border: 0px;
+    border-radius: @input-corner-radius;
+    height: @input-height;
+    background-image: linear-gradient(to right, @dark, @light-background-gradient-end);
+    color: white;
+    box-shadow:
+        0 1px 0px 0px @translucent-light,
+        0 -1px 0px 1px  @dark;
+    margin: 10px;
+    position:relative;
+}
+
+.it input[type=text] {
+    position: absolute;
+    top: 0px;
+    left: @input-height / 2;
+    right: 0px;
+    bottom: 0px;
+    color: white;
+    background-color: @transparent;
+    border: 0px;
+    font-size: @font-size;
+}
+
+
+.it {
+    input:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline: 0px;
+    }
+}
+
+.te {
+    position: absolute;
+    font-weight: bolder;
+    box-shadow:
+        1px 1px 2px 0px black,
+        0 -1px 0px 0px @button-background+#433;
+
+    top: 6px;
+    height: 20px;
+    background-color: @button-background;
+    color: @dark;
+    border: 0px;
+    font-size: @font-size;
+    border-radius: @button-corner-radius;
+}
+
+.it.button-right .te {
+    right: 6px;
+}
+
+.it.button-left .te {
+    left: 6px;
+}
+
+.te:hover {
+    color: white;
+    box-shadow: 1px 1px 0px 0px @dark,
+        0 -2px 1px 1px @dark;
+}
+
+.te.icon {
+    width: 20px;
+}
+
+.te.large {
+
+}
+
+.it.button-left input[type=text] {
+    margin-left: @input-height;
+}
