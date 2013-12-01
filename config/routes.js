@@ -5,9 +5,8 @@ module.exports = function(app){
 		security = require('../app/controllers/security'),
 		db = require('../app/controllers/db');
 
-	app.get('/', db.ready, security.logged_only, home.index);
+	app.get('/', security.logged_only, home.index);
 	app.post('/configure', db.configure);
-	app.get('/configure', db.configure);
 
 	app.get('/login', security.login_view);
 	app.post('/login', security.login);

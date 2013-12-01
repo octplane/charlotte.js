@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'),
+  db = require('../app/controllers/db');
 
 module.exports = function(app, config) {
   app.configure(function () {
@@ -27,11 +28,6 @@ module.exports = function(app, config) {
       if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
       next();
     });
-    app.use(function(req, res, next) {
-      res.locals.links_count = 12;
-
-      next();
-    });
 
     // Inject current user
     app.use(function(req, res, next){
@@ -48,6 +44,9 @@ module.exports = function(app, config) {
       app.use(express.errorHandler());
     }
 
+    // Site wide configuration
+    app.use(db.connect);
+    
     // Main routing table
     app.use(app.router);
 

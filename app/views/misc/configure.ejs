@@ -4,7 +4,7 @@
         <div class="metal padded">
             <h1>Please configure</h1>
             <div class="it button-right">
-                <input name="username" class="erasable" type="text" placeholder="Admin username" value="" />
+                <input name="username" class="erasable" type="text" placeholder="Admin username" value="<%= username || "" %>" />
                 <button type="button" class="te"></button>
             </div>            
             <div class="it button-right">
@@ -12,17 +12,16 @@
                 <button type="button" class="te"></button>
             </div>            
             <div class="it button-right">
-                <input name="password-again" class="erasable" type="text" placeholder="Repeat password" value="" />
+                <input name="password_again" class="erasable" type="text" placeholder="Repeat password" value="" />
                 <button type="button" class="te"></button>
             </div>
             <div class="row button-row-right">
                 <button class="btn green" type="submit">Save</button>            
             </div>
-
 <% if(message != '') { %>
             <div class="alert">
               <button type="button" class="close" data-dismiss="alert">×</button>
-                <b>Error!</b> Invalid username or password.
+              <%- message %>
             </div>
 <% } %>
         </div>

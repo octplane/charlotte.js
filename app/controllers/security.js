@@ -1,40 +1,38 @@
+var db = require("./db");
 
-function authenticate(name, pass, fn) {
+
+function authenticate(name, pass, req, res, fn) {
   console.log('authenticating %s:%s', name, pass);
-  var user = users[name];
-  // query the db for the given username
-  if (!user) {
-    console.log("User %s not found.", name);
-    return fn(new Error('cannot find user'));
+  if (db.validate_for_user(name, pass)) {
+    user.login = name;
   }
-  user.login = name;
-  // apply the same algorithm to the POSTed password, applying
-  // the hash against the pass / salt, if there is a match we
-  // found the user
-  return fn(null, user);
+  // FIXME: handle errors
+  return fn(user, req, res);
 }
 
+exports.perform_login_and_redirect = function(user, req, res) {
+  if (user) {
+    // Regenerate session when signing in
+    // to prevent fixation
+    req.session.regenerate(function(){
+    req.session.user = user;
+    req.session.user.dashboard_url = '/me';
+    var redirect = req.body.redirect || "/";
+    res.redirect(redirect);
+    });
+  } else {
+    req.session.error = 'Authentication failed, please check your '
+    + ' username and password.';
+    res.redirect('/login');
+  }
+};
+
 exports.login = function(req, res) {
-  authenticate(req.body.username, req.body.password, function(err, user) {
-    if (user) {
-      // Regenerate session when signing in
-      // to prevent fixation
-      req.session.regenerate(function(){
-      req.session.user = user;
-      req.session.user.dashboard_url = '/me';
-      var redirect = req.body.redirect || "/";
-      res.redirect(redirect);
-      });
-    } else {
-      req.session.error = 'Authentication failed, please check your '
-      + ' username and password.';
-      res.redirect('login');
-    }
-  });
+  authenticate(req.body.username, req.body.password, req, res, exports.perform_login_and_redirect);
 };
 
 exports.login_view = function(req, res) {
-  res.render('login', { redirect: req.params.redirect});
+  res.render('misc/login', { redirect: req.params.redirect});
 };
 
 exports.logout = function(req, res) {
