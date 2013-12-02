@@ -16,7 +16,7 @@ function updateButton(parent) {
     }
 }
 $(document).on("click", "button.te", function() {
-    $(this).parent().find("input[type=text]").val("");
+    $(this).parent().find("input[type=text],input[type=password]").val("");
     updateButton($(this).parent())
 });
 
@@ -25,12 +25,12 @@ $(document).on("click", "button.close", function() {
 });
 
 
-$(document).on("input", "input[type=text].erasable", function() {
+$(document).on("input", "input[type=text].erasable,input[type=password].erasable", function() {
     updateButton($(this).parent());
 });
 
 $(function() {
-	$("input[type=text].erasable").each(function() {
+	$("input[type=text].erasable,input[type=password].erasable").each(function() {
 		updateButton($(this).parent());
 	});
 })

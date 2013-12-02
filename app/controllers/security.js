@@ -2,9 +2,9 @@ var db = require("./db");
 
 
 function authenticate(name, pass, req, res, fn) {
-  console.log('authenticating %s:%s', name, pass);
-  if (db.validate_for_user(name, pass)) {
-    user.login = name;
+  var user;
+  if (db.validate_password(name, pass)) {
+    user = {login: name};
   }
   // FIXME: handle errors
   return fn(user, req, res);

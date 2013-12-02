@@ -3,28 +3,23 @@
 <div class='row'>
 <h1>Login</h1>
 <%- message %>
-<form class="form-horizontal" method='POST' action="/login">
-  <div class="control-group">
-    <label class="control-label" for="inputEmail">Login</label>
-    <div class="controls">
-      <input type="text" id="username" placeholder="Johndoe">
+<form class="not-wide-form" method='POST' action="/login">
+  <div class="metal padded">
+    <h1>Please Login</h1>
+    <div class="it button-right">
+        <input name="username" class="erasable" type="text" placeholder="Login" value="" />
+        <button type="button" class="te"></button>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Password</label>
-    <div class="controls">
-      <input type="password" id="inputPassword" placeholder="Password">
+
+    <div class="it button-right">
+        <input name="password" class="erasable" type="password" placeholder="Password" value="" />
+        <button type="button" class="te"></button>
     </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <label class="checkbox">
-        <input type="checkbox"> Remember me
-      </label>
-      <button type="submit" class="btn">Sign in</button>
-      <% if(redirect) {%>
-        <input type="hidden" name="redirect" value="<%= redirect %>"><% } %>
+    <div class="row button-row-right">
+      <button class="btn green" type="submit">Save</button>
     </div>
+    <% if(redirect) {%>
+      <input type="hidden" name="redirect" value="<%= redirect %>"><% } %>
   </div>
 </form>
 

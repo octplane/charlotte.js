@@ -29,8 +29,11 @@ db.on('load', function() {
 
 exports.validate_password = function(username, password) {
   if(db.custom()) {
-    if(db.custom().username == username)
-      return db.custom().plaintext_pwd == password;
+    console.log(db.custom());
+    console.log(db.custom().username === username);
+
+    if(db.custom().username === username)
+      return db.custom().plaintext_pwd === password;
   }
   return false;
 };
