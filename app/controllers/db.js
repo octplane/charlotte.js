@@ -17,14 +17,14 @@ if(!fs.existsSync(db_path)) {
 
 var db = require('nosql').load(db_file);
 
-console.log("Loaded %s db", db_file);
-console.log(db);
-console.log(db.custom());
-
-// if(!db.custom() || !db.custom().configured) {
-// 	console.log("Setting unconfigured flag");
-// 	db.custom({configured:false});
-// }
+db.on('load', function() {
+    var db = this;
+    console.log(db.custom());
+    if(!db.custom() || !db.custom().configured) {
+        console.log("Setting flag to False");
+        db.custom({configured:false});
+    }
+});
 
 
 exports.validate_password = function(username, password) {
