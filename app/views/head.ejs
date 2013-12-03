@@ -14,11 +14,12 @@
   <body>
     <div class="row top-bar">
       <div class="row middle">
-        <a class="col logo" href="/" title="home"><i class="fa fa-home"></i><span class="t">Charlotte <span class="c">with <%= links_count %> links</span></span></a>
+        <a class="col col2 logo" href="/" title="home"><i class="fa fa-home"></i><span class="t">Charlotte</span><span class="c"> with <%= links_count %> links</span></a>
         <a class="col" href="/" title="About"><i class="fa fa-question"></i><span class="t">About</span></a>
         <a class="col" href="#contact" title="Tag Cloud"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
         <a class="col" href="#contact" title="Picture Wall"><i class="fa fa-picture-o"></i><span class="t">Picture Wall</span></a>
         <% if (!me) { %><a class="col" href="/login" title="Login"><i class="fa fa-lock"></i><span class="t">Login</span></a><% } else { %>
+        <a class="col" href="/post_link"><i class="fa fa-plus-circle"></i><span class="t">Add Link</span></a>
         <a class="col" href="/logout" class="log-out-link"><i class="fa fa-unlock"></i><span class="t">Log out</span></a><% } %>
       </div>
     </div>

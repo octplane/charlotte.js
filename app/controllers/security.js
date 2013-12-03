@@ -23,7 +23,7 @@ exports.perform_login_and_redirect = function(user, req, res) {
   } else {
     req.session.error = 'Authentication failed, please check your '
     + ' username and password.';
-    res.redirect('/login');
+    res.redirect('misc/login', {redirect: redirect });
   }
 };
 
@@ -32,7 +32,7 @@ exports.login = function(req, res) {
 };
 
 exports.login_view = function(req, res) {
-  res.render('misc/login', { redirect: req.params.redirect});
+  res.render('misc/login', { redirect: req.query.redirect});
 };
 
 exports.logout = function(req, res) {

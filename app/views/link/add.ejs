@@ -1,0 +1,20 @@
+<% var title = 'Add a new link' %>
+<% include ../head %>
+    <form class='add-form1' method="POST" action='/add'>
+        <div class="metal padded">
+            <h1>Add a new link</h1>
+            <div class="it button-right">
+                <input name="url" class="erasable" type="text" placeholder="http://" value="<%= url %>" />
+                <button type="button" class="te"></button>
+            </div>
+            <div class="it button-right">
+                <input name="title" class="erasable" type="text" placeholder="page title" value="<%= url_title %>" />
+                <button type="button" class="te"></button>
+            </div>
+            <div class="row button-row-right">
+                <button class="btn green" type="submit">Add Link</button>
+            </div>
+        </div>
+      </form>
+
+<% include ../foot %>

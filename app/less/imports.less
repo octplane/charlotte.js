@@ -12,7 +12,7 @@
 
 }
 
-.not-wide-form {
+.basic-form {
     .noisy;
     width: 400px;
     margin-left: auto;
@@ -28,5 +28,14 @@
 		}
 	}
 	@import "forms";
+}
 
+.not-wide-form {
+	.basic-form;
+    width: 400px;
+}
+
+.quite-wide-form {
+	.basic-form;
+	width: 80%;
 }
