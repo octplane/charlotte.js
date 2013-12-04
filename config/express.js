@@ -1,4 +1,6 @@
 var express = require('express'),
+  FileSessionStore = require('connect-session-file'),
+  config = require('./config'),
   db = require('../app/controllers/db');
 
 module.exports = function(app, config) {
@@ -13,7 +15,10 @@ module.exports = function(app, config) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser('mycookiesecret'));
-    app.use(express.session());
+    app.use(express.session({
+      secret:'changethissecret',
+      store: new FileSessionStore({path:config.db_path, printDebug:true, useAsync:true})
+    }));
     // Custom Middlewares
 
     // Session-persisted message middleware
