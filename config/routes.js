@@ -7,8 +7,11 @@ module.exports = function(app){
 		link = require('../app/controllers/link');
 
 	app.get('/', home.index);
+	app.get('/about', home.about);
 	app.get('/post_link', security.logged_only, link.post_link);
 	app.get('/add', security.logged_only, link.add);
+	app.post('/add', security.logged_only, link.post);
+
 	app.post('/configure', db.configure);
 	//app.get('/settings', security.logged_only, settings.index);
 

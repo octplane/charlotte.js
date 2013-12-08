@@ -19,3 +19,18 @@ exports.add = function(req, res) {
 		}
 	});
 };
+
+exports.post = function(req, res) {
+	if (!req.query.title)
+		request(req.query.url, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				var $ = cheerio.load(body);
+				console.log($("title").text());
+		 		res.render('link/add', { url: req.query.url, url_title: $("title").text()});
+			} else {
+				console.log(error);
+			}
+		});
+	res.render('link/add', { url: req.query.url, url_title: req.query.title});
+	
+};

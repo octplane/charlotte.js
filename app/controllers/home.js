@@ -10,3 +10,12 @@ exports.index = function(req, res){
     });
   // });
 };
+
+exports.about = function(req, res) {
+	var my_url = '//' + req.headers.host + '/add/';
+
+	res.render('home/about', {
+		title: 'About',
+		root_url: my_url
+	});
+};
