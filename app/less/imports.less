@@ -18,9 +18,6 @@
     margin-left: auto;
     margin-right: auto;
     border-radius: 4px;
-	.padded {
-		padding: 10px;
-	}
 	.button-row-right {
 		height: 20px;
 		.btn {
@@ -29,13 +26,29 @@
 	}
 	@import "forms";
 }
-
 .not-wide-form {
 	.basic-form;
-    width: 400px;
+	@media only screen and (min-width: 500px) {
+    	width: 400px;
+    }
 }
 
 .quite-wide-form {
 	.basic-form;
-	width: 80%;
+  @media only screen and (min-width: 500px) {
+  	width: 80%;
+    .padded {
+      padding: 10px;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+  .quite-wide-form .basic-form, .not-wide-form .basic-form {
+    width: 100%;
+    .padded {
+      padding: 0px;
+    }
+  }
 }

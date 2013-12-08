@@ -13,7 +13,11 @@ exports.add = function(req, res) {
 		if (!error && response.statusCode == 200) {
 			var $ = cheerio.load(body);
 			console.log($("title").text());
-	 		res.render('link/add', { url: req.query.url, url_title: $("title").text()});
+	 		res.render('link/add', { 
+	 			url: req.query.url, 
+	 			url_title: $("title").text(),
+	 			in_add_sequence: true
+	 		});
 		} else {
 			console.log(error);
 		}
@@ -26,7 +30,10 @@ exports.post = function(req, res) {
 			if (!error && response.statusCode == 200) {
 				var $ = cheerio.load(body);
 				console.log($("title").text());
-		 		res.render('link/add', { url: req.query.url, url_title: $("title").text()});
+		 		res.render('link/add', {
+		 			url: req.query.url,
+		 			url_title: $("title").text(),
+		  			in_add_sequence: true });
 			} else {
 				console.log(error);
 			}

@@ -43,6 +43,7 @@ module.exports = function(app, config) {
       }
 
       res.locals.has_search = false;
+      res.locals.in_add_sequence = false;
       next();
     });
 

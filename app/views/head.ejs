@@ -19,7 +19,7 @@
         <a class="col" href="#contact" title="Tag Cloud"><i class="fa fa-cloud"></i><span class="t">Tag Cloud</span></a>
         <a class="col" href="#contact" title="Picture Wall"><i class="fa fa-picture-o"></i><span class="t">Picture Wall</span></a>
         <% if (!me) { %><a class="col" href="/login" title="Login"><i class="fa fa-lock"></i><span class="t">Login</span></a><% } else { %>
-        <a class="col" href="/post_link"><i class="fa fa-plus-circle"></i><span class="t">Add Link</span></a>
+        <% if (!in_add_sequence) {%><a class="col" href="/post_link"><i class="fa fa-plus-circle"></i><span class="t">Add Link</span></a><% } %>
         <a class="col" href="/logout" class="log-out-link"><i class="fa fa-unlock"></i><span class="t">Log out</span></a><% } %>
       </div>
     </div>
