@@ -41,6 +41,8 @@ module.exports = function(app, config) {
       } else {
         res.locals.me = undefined;
       }
+
+      res.locals.has_search = false;
       next();
     });
 
