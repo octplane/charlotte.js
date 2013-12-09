@@ -33,6 +33,29 @@
     font-size: @font-size;
 }
 
+textarea {
+    border: 0px;
+    border-radius: @input-corner-radius;
+    background-image: linear-gradient(to right, @dark, @light-background-gradient-end);
+    color: white;
+    box-shadow:
+        0 1px 0px 0px @translucent-light,
+        0 -1px 0px 1px  @dark;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    top: 0px;
+    left: @input-height / 2;
+    right: 0px;
+    bottom: 0px;
+    color: white;
+    background-color: @transparent;
+    border: 0px;
+    font-size: @font-size;
+}
+
 
 .it {
     input:focus {
@@ -78,29 +101,6 @@
 
 .btn.green {
     .button-color(#0C0);
-}
-
-.te {
-    position: absolute;
-    top: 6px;
-
-}
-
-.it.button-right .te {
-    right: 6px;
-}
-
-.it.button-left .te {
-    left: 6px;
-}
-
-
-.te.icon {
-    width: 20px;
-}
-
-.te.large {
-
 }
 
 .it.button-left input[type=text] {

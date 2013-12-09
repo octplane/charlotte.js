@@ -4,7 +4,7 @@
 		margin-top: 5px;
 		margin-bottom: 5px;
 	}
-	h4 {
+	h3, h4 {
 		margin: 0px;
 	}
 	no-wide-form {
@@ -14,3 +14,23 @@
 		display: none;
 	}
 }
+
+@media only screen and (max-width: 800px) {
+	form.add-form1 {
+		.row h3 { display: none;}
+		.half {
+			width: 85%;
+		}
+		.it { 
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.it.button-right .te {
+			right: 0px;
+		}
+		width: 100%;
+		border-radius: 0px;
+	}
+}
+
+

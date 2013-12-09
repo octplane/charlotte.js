@@ -2,7 +2,7 @@
 <% include ../head %>
     <form class='add-form1' method="POST" action='/add'>
         <div class="metal padded">
-            <h1>Add a new link</h1>
+            <h3>Add a new link</h3>
             <div class="row">
                 <div class="half">
                     <h3>URL</h3>
@@ -20,6 +20,20 @@
                     <input name="title" class="erasable" type="text" placeholder="page title" value="<%= url_title %>" />
                     <button type="button" class="te"></button>
                 </div>
+            </div>
+            <div class="row">
+                <h3>Tags</h3>
+            </div>
+            <div class="row">
+                <div class="it half button-right">
+                    <input name="tags" class="erasable" type="text" placeholder="tag1 tag2" value="<%= tags %>" />
+                </div>
+            </div>
+            <div class="row">
+                <h3>Description</h3>
+            </div>
+            <div class="row">
+                <textarea name="text" class="erasable" type="text" placeholder="Lorem ipsum"><%= description %></textarea>
             </div>
             <div class="row button-row-right">
                 <button class="btn green" type="submit">Add Link</button>
