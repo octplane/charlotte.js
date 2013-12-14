@@ -17,7 +17,9 @@
     "grunt-recess": "~0.4.0",
     "grunt": "~0.4.2",
     "load-grunt-tasks": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "crc32": "~0.2.2",
+    "btoa": "~1.1.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
