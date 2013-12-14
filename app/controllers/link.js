@@ -2,7 +2,8 @@ var db = require("./db"),
 	cheerio = require('cheerio'),
 	request = require('request'),
 	crc32 = require('crc32'),
-	btoa = require('btoa');
+	btoa = require('btoa'),
+	_=require("underscore");
     
 smallHash = function(text) {
 	var crc = crc32(text), bytes = [], hash;
@@ -13,7 +14,10 @@ smallHash = function(text) {
 		bytes.push(parseInt(crc.substr(p, 2), 16));
 	}
 	
-	hash = btoa(String.fromCharCode.apply(String, bytes)).replace(/=*$/,'');
+	hash = btoa(String.fromCharCode.apply(String, bytes)).
+		replace(/=*$/,'').
+		replace(/\+/g, '-').
+		replace(/\//g, '_');
 	return hash;
 }
 
@@ -45,8 +49,32 @@ exports.add = function(req, res) {
 
 exports.post = function(req, res) {
 	var parms = req.body;
-	console.log(smallHash(req.body));
-	var post_identifier = "plop";
-    res.redirect('/', {highlight: post_identifier});
+	var post = { url: req.body.url,
+		title: req.body.title,
+	}
+	if (req.body.tags != "")
+		post.tags = _.map(req.body.tags.split(/,/),
+			function(tag) {
+				return tag.trim();
+			});
 
+	if (req.body.text)
+		post.text = req.body.text;
+
+	post.id = smallHash(JSON.stringify(post));
+	console.log(post);
+	db.db.one(function (doc) { doc.id == post.id }, function(doc) {
+		// Ignore double posts with identical identifier
+		// TODO: what about identical URL or whatever ?
+		if (!doc) {
+			post.date_created = new Date();
+			post.date_updated = new Date();
+			db.db.insert(post, function(count) {
+				console.log("Inserted "+count+" items");
+			    res.redirect('/' , {highlight: post.id});
+			}, "Creating link for " + post.url);
+		} else {
+			console.log("Post already exists; not doing anything.");
+		}
+	});
 };

@@ -1,13 +1,15 @@
-// var mongoose = require('mongoose'),
-//   Article = mongoose.model('Article');
+var db = require("./db");
 
 exports.index = function(req, res){
   // Article.find(function(err, articles){
   //   if(err) throw new Error(err);
+  db.db.views.all('latest', function(selected, count) {
+    console.log(selected);
     res.render('home/index', {
-      title: 'Generator-Express MVC',
-      articles: null
-    });
+      title: 'Latest '+ count +' Links',
+      links: selected
+    });    
+  }, 1000);
   // });
 };
 

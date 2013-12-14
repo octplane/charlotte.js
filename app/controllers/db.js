@@ -15,8 +15,14 @@ db.on('load', function() {
         console.log("Setting flag to False");
         db.custom({configured:false});
     }
+    db.views.create('latest', function(d) { return d;}, function(a,b) { 
+      if (a.date_updated < b.date_updated)
+        return 1;
+      return -1;
+    });
 });
 
+exports.db = db;
 
 exports.validate_password = function(username, password) {
   if(db.custom()) {
