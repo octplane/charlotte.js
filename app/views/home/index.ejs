@@ -1,9 +1,34 @@
 <% include ../head %>
+<div class="link-list">
 
-<% for(var l in links) { %>
-plop
+<% links.forEach(function(el, index) { %>
+<div class='link'>
+	<div class="header">
+	<div class='identifier'><%= el.id %></div>
+	<div class="date"><%= el.since %>
+	<% if (el.private) { %>
+	<div class="public"></div>
+	<% } else { %>
+	<div class="private"></div><%
+	} %>
+
+	</div></div>
+
+<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><%= el.title %></a></h3>
+<% if (el.text) { %>
+<div class="text"><%- el.text %></div>
 <% } %>
+<% if (el.tags) {%>
+<div class="tags">
+	<% el.tags.forEach(function(tag, ix) {
+	%><div class="tag"><%= tag %></div><%
+	});
+	%>
+</div>
+<% } %>
+</div>
 
+<% }); %>
 
 
 <% include ../foot %>

@@ -53,7 +53,7 @@ exports.post = function(req, res) {
 		title: req.body.title,
 	}
 	if (req.body.tags != "")
-		post.tags = _.map(req.body.tags.split(/,/),
+		post.tags = _.map(req.body.tags.split(/ /),
 			function(tag) {
 				return tag.trim();
 			});
