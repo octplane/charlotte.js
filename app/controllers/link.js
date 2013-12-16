@@ -63,15 +63,13 @@ exports.post = function(req, res) {
 
 	post.id = smallHash(JSON.stringify(post));
 	console.log(post);
-	db.db.one(function (doc) { doc.id == post.id }, function(doc) {
+	db.db.one(function (doc) { if (doc.id == post.id) return doc; }, function(doc) {
 		// Ignore double posts with identical identifier
-		// TODO: what about identical URL or whatever ?
 		if (!doc) {
 			post.date_created = new Date();
 			post.date_updated = new Date();
 			db.db.insert(post, function(count) {
-				console.log("Inserted "+count+" items");
-			    res.redirect('/' , {highlight: post.id});
+			    res.redirect('/#highlight='+post.id);
 			}, "Creating link for " + post.url);
 		} else {
 			console.log("Post already exists; not doing anything.");
