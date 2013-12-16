@@ -3,6 +3,7 @@
 var fs = require("fs"),
   path = require("path"),
   config = require("../../config/config"),
+  bcrypt = require("bcrypt"),
   security = require("./security");
 
 
@@ -10,7 +11,6 @@ var db = require('nosql').load(config.db_file);
 
 db.on('load', function() {
     var db = this;
-    console.log(db.custom());
     if(!db.custom() || !db.custom().configured) {
         console.log("Setting flag to False");
         db.custom({configured:false});
@@ -30,7 +30,7 @@ exports.validate_password = function(username, password) {
     console.log(db.custom().username === username);
 
     if(db.custom().username === username)
-      return db.custom().plaintext_pwd === password;
+      return bcrypt.compareSync(password, db.custom().pwd);
   }
   return false;
 };
@@ -61,9 +61,10 @@ exports.configure = function(req, res) {
   if(msg)
     res.render('misc/configure', {message: msg, username:uname});
 
-  db.custom({configured:true, username: uname, plaintext_pwd:pwd1});
-
-  console.log(db.custom())
-  security.perform_login_and_redirect(uname, req, res);
-
+  var salt = bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(pwd1, salt, function(err, hash) {
+      db.custom({configured:true, username: uname, pwd: hash});
+      security.perform_login_and_redirect(uname, req, res);
+    });
+  });
 }
