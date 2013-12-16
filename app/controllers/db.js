@@ -62,7 +62,6 @@ exports.configure = function(req, res) {
     res.render('misc/configure', {message: msg, username:uname});
 
   db.custom({configured:true, username: uname, plaintext_pwd:pwd1});
-  db.insert({ firstName: 'Juraj', lastName: 'Hundo', age: 28 });
 
   console.log(db.custom())
   security.perform_login_and_redirect(uname, req, res);

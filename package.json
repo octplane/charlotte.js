@@ -21,7 +21,8 @@
     "crc32": "~0.2.2",
     "btoa": "~1.1.1",
     "underscore": "~1.5.2",
-    "moment": "~2.4.0"
+    "moment": "~2.4.0",
+    "bcrypt": "~0.7.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
