@@ -12,6 +12,10 @@
 	<div class="private"></div><%
 	} %>
 
+	<% if (me) { %>
+		<a href="/edit/<%= el.id %>">Edit</a>
+	<% } %>
+
 	</div></div>
 
 <h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><%= el.title %></a></h3>

@@ -22,7 +22,7 @@ exports.index = function(req, res){
     res.render('home/index', {
       title: 'Latest '+ count +' Links',
       links: selected
-    });    
+    });
   }, null, 1000);
   // });
 };

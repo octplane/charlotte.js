@@ -30,7 +30,6 @@ exports.add = function(req, res) {
 		request(req.query.url, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var $ = cheerio.load(body);
-				console.log($("title").text());
 		 		res.render('link/add', { 
 		 			url: req.query.url, 
 		 			url_title: $("title").text(),
@@ -47,6 +46,26 @@ exports.add = function(req, res) {
 	}
 };
 
+exports.edit = function(req, res) {
+	console.log(req.params.id);
+	db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
+		if(doc) {
+			console.log(doc);
+			res.render('link/add', {
+				id: doc.id,
+				url: doc.url,
+				url_title: doc.title,
+				tags: (doc.tags && doc.tags.join(" "))|| "",
+				description: doc.text && doc.text || "",
+				in_update_sequence: true
+			});
+
+		} else {
+			res.send(404, 'Sorry, we cannot find that!');
+		}
+	});
+}
+
 exports.post = function(req, res) {
 	var parms = req.body;
 	var post = { url: req.body.url,
@@ -61,18 +80,22 @@ exports.post = function(req, res) {
 	if (req.body.text)
 		post.text = req.body.text;
 
-	post.id = smallHash(JSON.stringify(post));
+	console.log(req.body);
+
+	if (req.body.id == null) {
+		post.id = smallHash(JSON.stringify(post));
+	} else {
+		post.id = req.body.id;
+	}
 	console.log(post);
 	db.db.one(function (doc) { if (doc.id == post.id) return doc; }, function(doc) {
 		// Ignore double posts with identical identifier
 		if (!doc) {
 			post.date_created = new Date();
-			post.date_updated = new Date();
-			db.db.insert(post, function(count) {
-			    res.redirect('/#highlight='+post.id);
-			}, "Creating link for " + post.url);
-		} else {
-			console.log("Post already exists; not doing anything.");
 		}
+		post.date_updated = new Date();
+		db.db.insert(post, function(count) {
+		    res.redirect('/#highlight='+post.id);
+		}, "Creating link for " + post.url);
 	});
 };

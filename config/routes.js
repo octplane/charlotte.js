@@ -11,6 +11,7 @@ module.exports = function(app){
 	app.get('/post_link', security.logged_only, link.post_link);
 	app.get('/add', security.logged_only, link.add);
 	app.post('/add', security.logged_only, link.post);
+	app.get('/edit/:id', security.logged_only, link.edit);
 
 	app.post('/configure', db.configure);
 	//app.get('/settings', security.logged_only, settings.index);
