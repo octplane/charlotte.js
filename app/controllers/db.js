@@ -9,18 +9,25 @@ var fs = require("fs"),
 
 var db = require('nosql').load(config.db_file);
 
+exports.update_views = function() {
+  db.views.create('latest', function(d) { return d;}, function(a,b) {
+    if (a.date_updated < b.date_updated)
+      return 1;
+    return -1;
+  });
+};
+
+
 db.on('load', function() {
     var db = this;
     if(!db.custom() || !db.custom().configured) {
         console.log("Setting flag to False");
         db.custom({configured:false});
+        exports.update_views();
     }
-    db.views.create('latest', function(d) { return d;}, function(a,b) { 
-      if (a.date_updated < b.date_updated)
-        return 1;
-      return -1;
-    });
 });
+
+
 
 exports.db = db;
 

@@ -35,14 +35,15 @@ exports.add = function(req, res) {
 		 			url_title: $("title").text(),
 		 			tags: "",
 		 			description: "",
-		 			in_add_sequence: true
+		 			in_add_sequence: true,
+		 			in_update_sequence: false
 		 		});
 			} else {
 				console.log(error);
 			}
 		});
 	} else {
-		res.render('link/add', { url: req.query.url, tags:"", in_add_sequence: true, description: "", url_title: req.query.title});
+		res.render('link/add', { url: req.query.url, tags:"", in_add_sequence: true, in_update_sequence: false, description: "", url_title: req.query.title});
 	}
 };
 
@@ -80,22 +81,20 @@ exports.post = function(req, res) {
 	if (req.body.text)
 		post.text = req.body.text;
 
-	console.log(req.body);
+	post.date_updated = new Date();
 
 	if (req.body.id == null) {
+		post.date_created = new Date();
 		post.id = smallHash(JSON.stringify(post));
+		db.db.insert(post, function(count) {
+				db.update_views();
+				res.redirect('/#highlight='+post.id);
+		}, "Creating link for " + post.url);
 	} else {
 		post.id = req.body.id;
-	}
-	console.log(post);
-	db.db.one(function (doc) { if (doc.id == post.id) return doc; }, function(doc) {
-		// Ignore double posts with identical identifier
-		if (!doc) {
-			post.date_created = new Date();
-		}
-		post.date_updated = new Date();
-		db.db.insert(post, function(count) {
+		db.db.update(function (doc) { if (doc.id == post.id) return post; }, function(count) {
+				db.update_views();
 		    res.redirect('/#highlight='+post.id);
-		}, "Creating link for " + post.url);
-	});
+		}, "Updating link for " + post.url);
+	}
 };
