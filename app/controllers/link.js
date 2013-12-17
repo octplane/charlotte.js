@@ -92,7 +92,7 @@ exports.post = function(req, res) {
 		}, "Creating link for " + post.url);
 	} else {
 		post.id = req.body.id;
-		db.db.update(function (doc) { if (doc.id == post.id) return post; }, function(count) {
+		db.db.update(function (doc) { if (doc.id == post.id) return post; return doc; }, function(count) {
 				db.update_views();
 		    res.redirect('/#highlight='+post.id);
 		}, "Updating link for " + post.url);
