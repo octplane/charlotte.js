@@ -1,5 +1,6 @@
 var db = require("./db"),
-  _=require('underscore'),
+  _ = require('underscore'),
+  url = require('url'),
   moment = require('moment');
 
 var urlMatcher = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
@@ -10,6 +11,11 @@ beautify = function(text) {
   return t;
 }
 
+favicon = function(ul) {
+  var u = url.parse(ul);
+  return u.protocol + '//' + u.hostname + '/favicon.ico';
+}
+
 exports.index = function(req, res){
   // Article.find(function(err, articles){
   //   if(err) throw new Error(err);
@@ -17,6 +23,7 @@ exports.index = function(req, res){
     _.each(selected, function(el) {
       el.since = moment(el.date_updated).fromNow();
       el.text = el.text ? beautify(el.text) : null;
+      el.f = favicon(el.url);
     });
     console.log(selected);
     res.render('home/index', {

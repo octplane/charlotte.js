@@ -33,8 +33,12 @@ siteThumb = function(identifier, url) {
 		if (!exists && url){
 			console.log("Fetching thumb for " + identifier + " at " + url);
 			webshot(url, p, function(err) {
-				console.log("Something went wrong while fetching "+identifier+" snapshot.");
-				console.log(err);
+				if(err) {
+					console.log("Something went wrong while fetching "+identifier+" snapshot.");
+					console.log(err);
+				} else {
+					console.log("Gor snapshot for " + identifier);
+				}
 			  // screenshot now saved to google.png
 			});
 		}
