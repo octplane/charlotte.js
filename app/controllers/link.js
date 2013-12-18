@@ -29,8 +29,11 @@ smallHash = function(text) {
 siteThumb = function(identifier, url) {
 	var p = path.join(config.db_path, "images", identifier + ".jpg");
 	fs.exists(p, function(exists) {
+		console.log(exists +  " " + url);
 		if (!exists && url){
+			console.log("Fetching thumb for " + identifier + " at " + url);
 			webshot(url, p, function(err) {
+				console.log("Something went wrong while fetching "+identifier+" snapshot.");
 				console.log(err);
 			  // screenshot now saved to google.png
 			});
@@ -46,7 +49,7 @@ exports.thumb = function(req, res) {
 	var path = siteThumb(id);
 
 	function error(err) {
-	  if (404 == err.status) res.render(404, "Missing");
+	  if (404 == err.status) res.send(404, "Missing");
 	}
 
 	send(req, path)
@@ -137,6 +140,9 @@ exports.post = function(req, res) {
 		}, "Creating link for " + post.url);
 	} else {
 		post.id = req.body.id;
+		console.log("plop");
+		console.log(post);
+		console.log("plip");
 		siteThumb(post.id, post.url);
 		db.db.update(function (doc) { if (doc.id == post.id) return post; return doc; }, function(count) {
 				db.update_views();

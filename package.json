@@ -25,7 +25,8 @@
     "bcrypt": "~0.7.7",
     "rss": "~0.2.1",
     "atob": "~1.1.0",
-    "send": "~0.1.4"
+    "send": "~0.1.4",
+    "webshot": "~0.8.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
