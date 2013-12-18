@@ -10,6 +10,9 @@ var db = require("./db"),
 	send = require('send'),
 	config = require("../../config/config");
 
+var rootPath = path.normalize(__dirname + '/../../');
+var missingThumbPath = path.join(rootPath, "public/img/questionmark.jpg");
+
 smallHash = function(text) {
 	var crc = crc32(text), bytes = [], hash;
 
@@ -32,7 +35,14 @@ siteThumb = function(identifier, url) {
 		console.log(exists +  " " + url);
 		if (!exists && url){
 			console.log("Fetching thumb for " + identifier + " at " + url);
-			webshot(url, p, function(err) {
+			var options = {
+				windowSize: { width: 1024, height: 768},
+				zoomFactor: 0.5,
+				shotSize: { width: 512, height: 384}
+
+
+			};
+			webshot(url, p, options, function(err) {
 				if(err) {
 					console.log("Something went wrong while fetching "+identifier+" snapshot.");
 					console.log(err);
@@ -53,7 +63,9 @@ exports.thumb = function(req, res) {
 	var path = siteThumb(id);
 
 	function error(err) {
-	  if (404 == err.status) res.send(404, "Missing");
+		send(req )
+	  if (404 == err.status) 
+	  	send(req, missingThumbPath).pipe(res);
 	}
 
 	send(req, path)
