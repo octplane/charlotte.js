@@ -32,10 +32,6 @@ db.on('load', function() {
 exports.db = db;
 
 exports.validate_password = function(username, password) {
-  if(db.custom()) {
-    console.log(db.custom());
-    console.log(db.custom().username === username);
-
     if(db.custom().username === username)
       return bcrypt.compareSync(password, db.custom().pwd);
   }
