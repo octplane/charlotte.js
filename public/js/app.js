@@ -34,3 +34,11 @@ $(function() {
 		updateButton($(this).parent());
 	});
 })
+
+$(function(){
+  $.adaptiveBackground.run(
+    {
+        normalizeTextColor: true,
+        normalizedTextColors: {dark: '#222', light: '#ddd'}
+    });
+});

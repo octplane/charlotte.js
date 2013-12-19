@@ -22,7 +22,7 @@
 <% if (el.text) { %>
 <div class="text"><%- el.text %></div>
 <% } %>
-<img class="i" src="/t/<%= el.id %>.jpg" width="200">
+<img data-adaptive-background='1' class="i" src="/t/<%= el.id %>.jpg" width="200">
 <% if (el.tags) {%>
 <div class="tags">
 	<% el.tags.forEach(function(tag, ix) {
