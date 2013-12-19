@@ -1,7 +1,9 @@
 var db = require("./db"),
   _ = require('underscore'),
   url = require('url'),
-  moment = require('moment');
+  moment = require('moment'),
+  async = require('async'),
+  fav = require('favicon');
 
 var urlMatcher = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
@@ -16,19 +18,30 @@ favicon = function(ul) {
   return u.protocol + '//' + u.hostname + '/favicon.ico';
 }
 
+prepareForView = function(item, next) {
+  item.since = moment(item.date_updated).fromNow();
+  item.text = item.text ? beautify(item.text) : null;
+  fav(item.url, function(err, favicon_url) {
+    if (!err) {
+      console.log("Favicon: "+item.url+" -> "+ favicon_url);
+      item.f = favicon_url;
+    } else {
+      console.log("Error while fetching favicon url for "+item.url);
+      console.log(err);
+    }
+    next(null, item);
+  });
+}
+
 exports.index = function(req, res){
   // Article.find(function(err, articles){
   //   if(err) throw new Error(err);
   db.db.views.all('latest', function(selected, count) {
-    _.each(selected, function(el) {
-      el.since = moment(el.date_updated).fromNow();
-      el.text = el.text ? beautify(el.text) : null;
-      el.f = favicon(el.url);
-    });
-    console.log(selected);
-    res.render('home/index', {
-      title: 'Latest '+ count +' Links',
-      links: selected
+    async.map(selected, prepareForView, function(err, selected) {
+      res.render('home/index', {
+        title: 'Latest '+ count +' Links',
+        links: selected
+      });
     });
   }, null, 1000);
   // });

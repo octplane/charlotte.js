@@ -26,7 +26,9 @@
     "rss": "~0.2.1",
     "atob": "~1.1.0",
     "send": "~0.1.4",
-    "webshot": "~0.8.2"
+    "webshot": "~0.8.2",
+    "favicon": "0.0.2",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
