@@ -1,25 +1,29 @@
 var express = require('express'),
   FileSessionStore = require('connect-session-file'),
   config = require('./config'),
-  db = require('../app/controllers/db');
+  db = require('../app/controllers/db'),
+  link = require('../app/controllers/link');
 
 module.exports = function(app, config) {
   app.configure(function () {
-    app.use(express.compress());
-    app.use(express.static(config.root + '/public'));
     app.set('port', config.port);
     app.set('views', config.root + '/app/views');
     app.set('view engine', 'ejs');
+
+    app.use(express.compress());
     app.use(express.favicon(config.root + '/public/img/favicon.ico'));
+    app.use(express.static(config.root + '/public'));
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser('mycookiesecret'));
     app.use(express.session({
       secret:'changethissecret',
-      store: new FileSessionStore({path:config.db_path, printDebug:true, useAsync:true})
+      store: new FileSessionStore({path:config.db_path, printDebug:false, useAsync:true})
     }));
-    // Custom Middlewares
+    app.use('/i/t', express.static(config.db_path + 'images'));
+    app.use('/i/f', express.static(config.db_path + 'favicons'));
+
 
     // Session-persisted message middleware
     app.use(function(req, res, next){

@@ -29,49 +29,56 @@ smallHash = function(text) {
 	return hash;
 };
 
-siteThumb = function(identifier, url) {
-	var p = path.join(config.db_path, "images", identifier + ".jpg");
-	fs.exists(p, function(exists) {
-		console.log(exists +  " " + url);
+siteThumb = function(identifier, url, cb) {
+	var thumbPath = path.join(config.db_path, "images", identifier + ".jpg");
+	fs.exists(thumbPath, function(exists) {
 		if (!exists && url){
 			console.log("Fetching thumb for " + identifier + " at " + url);
 			var options = {
 				windowSize: { width: 640, height: 480}
 			};
-			webshot(url, p, options, function(err) {
+			webshot(url, thumbPath, options, function(err) {
 				if(err) {
-					console.log("Something went wrong while fetching "+identifier+" snapshot.");
-					console.log(err);
+					cb && cb(err, null);
 				} else {
-					console.log("Gor snapshot for " + identifier);
+					cb && cb(null, thumbPath);
 				}
 			  // screenshot now saved to google.png
 			});
 		}
 	})
-	return p;
 };
 
-exports.thumb = function(req, res) {
-	var id = req.params.id;
+exports.thumb = function(req, res, next) {
+	db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
+		if(doc && (!doc.disable_thumb_until || doc.disable_thumb_until < Date.now)) {
+			console.log("Generating thumb for "+req.params.id);
+			siteThumb(doc.id, doc.url, function(err, thumbPath) {
+				if (!err) {
+					send(req, thumbPath).pipe(res);
+				} else {
+					// disable thumb for 24h
+					var old = doc;
+					old.disable_thumb_until = Date.now() + 24 * 60 * 3600 * 1000;
+					db.db.update(function (doc) { if (doc.id == old.id) return old; return doc; }, function(count) {
+						db.update_views();
+					}, "Disabling thumbnail for a while for " + old.url);
 
-	if ('GET' != req.method && 'HEAD' != req.method) res.render(403, "Go away");
-	var path = siteThumb(id);
-
-	function error(err) {
-		send(req )
-	  if (404 == err.status) 
-	  	send(req, missingThumbPath).pipe(res);
-	}
-
-	send(req, path)
-	  //.maxage(options.maxAge || 0)
-	  // .root(root)
-	  // .index(options.index || 'index.html')
-	  // .hidden(options.hidden)
-	  .on('error', error)
-	  .pipe(res);
+					console.log("Failed:" + err);
+					res.status(404);
+					send(req, missingThumbPath).pipe(res);
+				}
+			});
+		} else {
+			if(doc && doc.disable_thumb_until) {
+				console.log("Date.now=" + Date.now() + " < " + doc.disable_thumb_until + ": Thumb disabled");
+			}
+			res.status(404);
+			send(req, missingThumbPath).pipe(res);
+		}
+	});
 };
+
 
 exports.post_link = function(req, res) {
 	res.render('link/post_link');

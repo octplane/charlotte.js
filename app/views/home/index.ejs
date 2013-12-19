@@ -18,11 +18,11 @@
 
 	</div></div>
 
-<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><% if (el.f) {%><img width="16" src="<%= el.f %>"/><% } %><%= el.title %></a></h3>
+<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><img width="16" src="/i/f/<%= el.id %>.<%= el.f %>"/><%= el.title %></a></h3>
 <% if (el.text) { %>
 <div class="text"><%- el.text %></div>
 <% } %>
-<img data-adaptive-background='1' class="i" src="/t/<%= el.id %>.jpg" width="200">
+<img data-adaptive-background='1' class="i" src="/i/t/<%= el.id %>.jpg" width="200">
 <% if (el.tags) {%>
 <div class="tags">
 	<% el.tags.forEach(function(tag, ix) {
