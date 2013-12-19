@@ -36,11 +36,7 @@ siteThumb = function(identifier, url) {
 		if (!exists && url){
 			console.log("Fetching thumb for " + identifier + " at " + url);
 			var options = {
-				windowSize: { width: 1024, height: 768},
-				zoomFactor: 0.5,
-				shotSize: { width: 512, height: 384}
-
-
+				windowSize: { width: 640, height: 480}
 			};
 			webshot(url, p, options, function(err) {
 				if(err) {
