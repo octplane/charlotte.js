@@ -169,3 +169,32 @@ exports.post = function(req, res) {
 		}, "Updating link for " + post.url);
 	}
 };
+
+var RSS = require('rss');
+var async = require('async');
+exports.rss = function(req, res) {
+
+	var proto = req.connection.encrypted ? "https" : "http";
+	var site_url = proto  + '://' + req.headers.host + '/';
+	var feed_url = site_url + 'rss';
+	var feed = new RSS({
+		title: db.get_title(),
+		generator: "Charlotte.js",
+		site_url: site_url,
+		feed_url: feed_url});
+
+	db.db.views.all('latest', function(selected, count) {
+		async.map(selected, prepareForView, function(err, selected) {
+			selected.forEach(function(item) {
+				feed.item({
+					title: item.title,
+					guid: site_url + "view/" + item.id,
+					date: item.created_at,
+					description: item.text
+				});
+			});
+			res.set('Content-Type', 'text/xml');
+			res.send(feed.xml());
+		});
+	}, null, 20);
+};

@@ -28,8 +28,13 @@ db.on('load', function() {
 });
 
 
+var DEFAULT_TITLE = "Charlotte";
 
 exports.db = db;
+
+exports.get_title = function() {
+  return db.custom().title || DEFAULT_TITLE;
+}
 
 exports.validate_password = function(username, password) {
   if(db.custom().username === username)
@@ -65,7 +70,7 @@ exports.configure = function(req, res) {
 
   var salt = bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(pwd1, salt, function(err, hash) {
-      db.custom({configured:true, username: uname, pwd: hash});
+      db.custom({configured:true, title: DEFAULT_TITLE, username: uname, pwd: hash});
       security.perform_login_and_redirect(uname, req, res);
     });
   });
