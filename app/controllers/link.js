@@ -8,10 +8,11 @@ var db = require("./db"),
 	path = require('path'),
 	fs = require('fs'),
 	send = require('send'),
-	config = require("../../config/config");
+	config = require("../../config/config"),
+	fav = require('favicon');
+
 
 var rootPath = path.normalize(__dirname + '/../../');
-var missingThumbPath = path.join(rootPath, "public/img/questionmark.jpg");
 
 smallHash = function(text) {
 	var crc = crc32(text), bytes = [], hash;
@@ -29,33 +30,44 @@ smallHash = function(text) {
 	return hash;
 };
 
-siteThumb = function(identifier, url, cb) {
-	var thumbPath = path.join(config.db_path, "images", identifier + ".jpg");
-	fs.exists(thumbPath, function(exists) {
+fetchThumb = function(identifier, url, outPath, cb) {
+	var options = {
+		windowSize: { width: 640, height: 480}
+	};
+	webshot(url, outPath, options, function(err) {
+		if(err) {
+			cb && cb(err, null);
+		} else {
+			cb && cb(null, outPath);
+		}
+	});
+}
+
+fetchImage = function(identifier, url, kind, fetchMethod, cb) {
+	var outPath = path.join(config.db_path, "images", kind + "_" + identifier + ".jpg");
+	fs.exists(outPath, function(exists) {
 		if (!exists && url){
-			console.log("Fetching thumb for " + identifier + " at " + url);
-			var options = {
-				windowSize: { width: 640, height: 480}
-			};
-			webshot(url, thumbPath, options, function(err) {
-				if(err) {
-					cb && cb(err, null);
-				} else {
-					cb && cb(null, thumbPath);
-				}
-			  // screenshot now saved to google.png
-			});
+			console.log("Fetching " + kind+ " for " + identifier + " at " + url);
+			fetchMethod(identifier, url, outPath, cb);
+		} else {
+			cb(null, outPath);
 		}
 	})
 };
 
+
+
 exports.thumb = function(req, res, next) {
+	var type = "thumb";
+	var fetchMethod = fetchThumb;
+	var missingThumbPath = path.join(rootPath, "public/img/questionmark.jpg");
+
 	db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
 		if(doc && (!doc.disable_thumb_until || doc.disable_thumb_until < Date.now)) {
 			console.log("Generating thumb for "+req.params.id);
-			siteThumb(doc.id, doc.url, function(err, thumbPath) {
+			fetchImage(doc.id, doc.url, type, fetchMethod, function(err, imagePath) {
 				if (!err) {
-					send(req, thumbPath).pipe(res);
+					send(req, imagePath).pipe(res);
 				} else {
 					// disable thumb for 24h
 					var old = doc;

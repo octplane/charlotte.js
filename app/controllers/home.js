@@ -2,8 +2,7 @@ var db = require("./db"),
   _ = require('underscore'),
   url = require('url'),
   moment = require('moment'),
-  async = require('async'),
-  fav = require('favicon');
+  async = require('async');
 
 var urlMatcher = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
