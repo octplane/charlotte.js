@@ -27,7 +27,7 @@
     "atob": "~1.1.0",
     "send": "~0.1.4",
     "webshot": "~0.8.2",
-    "favicon": "0.0.2",
+    "ico-ico": "0.0.4",
     "async": "~0.2.9"
   },
   "devDependencies": {

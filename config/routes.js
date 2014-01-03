@@ -6,8 +6,8 @@ module.exports = function(app){
 		db = require('../app/controllers/db'),
 		link = require('../app/controllers/link');
 
-    app.get('/i/t/:id.jpg', link.thumb);
-//	app.use('/i/f/', link.favicon);
+	app.get('/i/t/:id.:ext', link.thumb);
+	app.get('/i/f/:id', link.ico);
 
 	app.get('/', home.index);
 	app.get('/about', home.about);
@@ -18,7 +18,6 @@ module.exports = function(app){
 	app.get('/rss', link.rss);
 
 	app.post('/configure', db.configure);
-	//app.get('/settings', security.logged_only, settings.index);
 
 	app.get('/login', security.login_view);
 	app.post('/login', security.login);

@@ -12,24 +12,11 @@ beautify = function(text) {
   return t;
 }
 
-favicon = function(ul) {
-  var u = url.parse(ul);
-  return u.protocol + '//' + u.hostname + '/favicon.ico';
-}
 
 prepareForView = function(item, next) {
   item.since = moment(item.date_updated).fromNow();
   item.text = item.text ? beautify(item.text) : null;
-  // fav(item.url, function(err, favicon_url) {
-  //   if (!err) {
-  //     console.log("Favicon: "+item.url+" -> "+ favicon_url);
-  //     item.f = favicon_url;
-  //   } else {
-  //     console.log("Error while fetching favicon url for "+item.url);
-  //     console.log(err);
-  //   }
-    next(null, item);
-  // });
+  next(null, item);
 }
 
 exports.index = function(req, res){

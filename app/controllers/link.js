@@ -9,7 +9,7 @@ var db = require("./db"),
 	fs = require('fs'),
 	send = require('send'),
 	config = require("../../config/config"),
-	fav = require('favicon');
+	ico = require('ico-ico');
 
 
 var rootPath = path.normalize(__dirname + '/../../');
@@ -30,11 +30,12 @@ smallHash = function(text) {
 	return hash;
 };
 
-fetchThumb = function(identifier, url, outPath, cb) {
+fetchThumb = function(url, outPath, cb) {
 	var options = {
 		windowSize: { width: 640, height: 480}
 	};
 	webshot(url, outPath, options, function(err) {
+		console.log("Wrote to " + outPath);
 		if(err) {
 			cb && cb(err, null);
 		} else {
@@ -43,52 +44,90 @@ fetchThumb = function(identifier, url, outPath, cb) {
 	});
 }
 
-fetchImage = function(identifier, url, kind, fetchMethod, cb) {
-	var outPath = path.join(config.db_path, "images", kind + "_" + identifier + ".jpg");
-	fs.exists(outPath, function(exists) {
-		if (!exists && url){
-			console.log("Fetching " + kind+ " for " + identifier + " at " + url);
-			fetchMethod(identifier, url, outPath, cb);
-		} else {
-			cb(null, outPath);
-		}
-	})
-};
-
-
-
-exports.thumb = function(req, res, next) {
-	var type = "thumb";
-	var fetchMethod = fetchThumb;
-	var missingThumbPath = path.join(rootPath, "public/img/questionmark.jpg");
-
-	db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
-		if(doc && (!doc.disable_thumb_until || doc.disable_thumb_until < Date.now)) {
-			console.log("Generating thumb for "+req.params.id);
-			fetchImage(doc.id, doc.url, type, fetchMethod, function(err, imagePath) {
-				if (!err) {
-					send(req, imagePath).pipe(res);
-				} else {
-					// disable thumb for 24h
-					var old = doc;
-					old.disable_thumb_until = Date.now() + 24 * 60 * 3600 * 1000;
-					db.db.update(function (doc) { if (doc.id == old.id) return old; return doc; }, function(count) {
-						db.update_views();
-					}, "Disabling thumbnail for a while for " + old.url);
-
-					console.log("Failed:" + err);
-					res.status(404);
-					send(req, missingThumbPath).pipe(res);
-				}
-			});
-		} else {
-			if(doc && doc.disable_thumb_until) {
-				console.log("Date.now=" + Date.now() + " < " + doc.disable_thumb_until + ": Thumb disabled");
+fetchFavicon = function(url, outPath, cb) {
+	ico(url, function(err, furl) {
+		if (!err) {
+			if (furl) {
+				console.log("Fetching "+furl);
+				request({uri: furl, encoding: null}, function(err, res, body) {
+					if (!err && res.statusCode == 200) {
+						fs.writeFile(outPath, body, null, function(err) {
+							if (err) {
+								console.log("Something went wrong while saving " + furl + " to " + outPath);
+								console.log(err);
+								cb && cb(err, null);
+							} else {
+								console.log("Wrote to "+outPath);
+								cb && cb(null, outPath);
+							}
+						});
+					} else {
+						cb && cb(err, null);
+					}
+				});
+			} else {
+				console.log("Failed finding favicon for "+url)
+				cb && cb(null, null);
 			}
-			res.status(404);
-			send(req, missingThumbPath).pipe(res);
+		} else {
+			cb(err, null);
 		}
 	});
+}
+
+fetchImage = function(doc, type, outPath, fetchMethod, cb) {
+	if (doc.url){
+		console.log("Fetching " + type + " for " + doc.id + " at " + doc.url + " into " + outPath);
+		fetchMethod(doc.url, outPath, cb);
+	} else {
+		cb && cb(null, null);
+	}
+};
+
+update_image_for_type = function(req, res, outPath, type, fetchMethod) {
+	console.log("Looking for " + outPath);
+
+	fs.exists(outPath, function(exists) {
+		var missingThumbPath = path.join(rootPath, "public/img/missing_" + type + ".jpg");
+		if (!exists) {
+			var disable_type = "disable_" + type + "_until";
+			db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
+				if(doc && (!doc[disable_type] || doc[disable_type] < Date.now)) {
+					fetchImage(doc, type, outPath, fetchMethod, function(err, imagePath) {
+						if (err) {
+							// disable thumb for 1h
+							var old = doc;
+							old[disable_type] = Date.now() + 3600 * 1000;
+							db.db.update(function (doc) { if (doc.id == old.id) return old; return doc; }, function(count) {
+								db.update_views();
+							}, "Disabling thumbnail for a while for " + old.url);
+							console.log("Failed:" + err);
+						}
+					});
+				} else {
+					if(doc && doc[disable_type]) {
+						console.log("Date.now=" + Date.now() + " < " + doc[disable_type] + ": Thumb disabled for " +  doc.url);
+					}
+				}
+			});
+			res.status(404);
+			send(req, missingThumbPath).pipe(res);
+		} else {
+			send(req, outPath).pipe(res);
+		}
+	});
+}
+
+
+
+exports.thumb = function(req, res) {
+	var outPath = path.join(config.db_path, "thumb" , req.params.id + "." + req.params.ext);
+	update_image_for_type(req, res, outPath,  "thumb", fetchThumb);	
+};
+
+exports.ico = function(req, res) {
+	var outPath = path.join(config.db_path, "favicon" , req.params.id);
+	update_image_for_type(req, res, outPath, "favicon", fetchFavicon);	
 };
 
 
@@ -98,9 +137,8 @@ exports.post_link = function(req, res) {
 
 exports.add = function(req, res) {
 	if (!req.query.title) {
-		request(req.query.url, function(error, response, body) {
-			console.log(response.statusCode);
-			if (!error && response.statusCode == 200) {
+		request(req.query.url, function(err, response, body) {
+			if (!err && response.statusCode == 200) {
 				var $ = cheerio.load(body);
 		 		res.render('link/add', {
 		 			url: req.query.url,
@@ -111,6 +149,7 @@ exports.add = function(req, res) {
 		 			in_update_sequence: false
 		 		});
 			} else {
+				console.log(err);
 				res.render('link/add', {
 					url: req.query.url,
 					url_title: "Unable to fetch title",
@@ -164,17 +203,14 @@ exports.post = function(req, res) {
 	if (req.body.id == null) {
 		post.date_created = new Date();
 		post.id = smallHash(JSON.stringify(post));
-		siteThumb(post.id, post.url);
+		fetchImage(post, 'thumb', fetchThumb);
 		db.db.insert(post, function(count) {
 				db.update_views();
 				res.redirect('/#highlight='+post.id);
 		}, "Creating link for " + post.url);
 	} else {
 		post.id = req.body.id;
-		console.log("plop");
-		console.log(post);
-		console.log("plip");
-		siteThumb(post.id, post.url);
+		fetchImage(post, 'thumb', fetchThumb);
 		db.db.update(function (doc) { if (doc.id == post.id) return post; return doc; }, function(count) {
 				db.update_views();
 		    res.redirect('/#highlight='+post.id);

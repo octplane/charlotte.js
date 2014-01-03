@@ -21,8 +21,8 @@ module.exports = function(app, config) {
       secret:'changethissecret',
       store: new FileSessionStore({path:config.db_path, printDebug:false, useAsync:true})
     }));
-    app.use('/i/t', express.static(config.db_path + 'images'));
-    app.use('/i/f', express.static(config.db_path + 'favicons'));
+    app.use('/i/t', express.static(config.db_path + 'thumb'));
+    app.use('/i/f', express.static(config.db_path + 'favicon'));
 
 
     // Session-persisted message middleware
@@ -63,9 +63,9 @@ module.exports = function(app, config) {
     app.use(app.router);
 
     // And the 404 finally
-    app.use(function(req, res) {
-      res.status(404).render('misc/404', { title: '404' });
-    });
+    // app.use(function(req, res) {
+    //   res.status(404).render('misc/404', { title: '404' });
+    // });
 
   });
 };

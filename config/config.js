@@ -14,6 +14,11 @@ if(!fs.existsSync(db_path)) {
   fs.mkdirSync(db_path, "0700");
 }
 
+if(!fs.existsSync(db_path + "favicon")) {
+  console.log("Creating folder %s...", db_path + "favicon");
+  fs.mkdirSync(db_path + "favicon" , "0700");
+}
+
 var config = {
   development: {
     root: rootPath,
