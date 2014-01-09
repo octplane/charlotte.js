@@ -9,6 +9,7 @@ var db = require("./db"),
 	fs = require('fs'),
 	send = require('send'),
 	config = require("../../config/config"),
+	link = require("../models/link"),
 	ico = require('ico-ico');
 
 
@@ -62,7 +63,9 @@ fetchFavicon = function(url, outPath, cb) {
 							}
 						});
 					} else {
-						cb && cb(err, null);
+						console.log("Error while fetching favicon (" + res.statusCode + ")");
+						console.log(err);
+						cb && cb("Irk", null);
 					}
 				});
 			} else {
@@ -70,6 +73,7 @@ fetchFavicon = function(url, outPath, cb) {
 				cb && cb(null, null);
 			}
 		} else {
+			console.log("ico, failed" + err);
 			cb(err, null);
 		}
 	});
@@ -118,16 +122,32 @@ update_image_for_type = function(req, res, outPath, type, fetchMethod) {
 	});
 }
 
+var defaultParams = {
+	'link/add' : {
+		title: "Add a new link",
+		in_update_sequence: false,
+		in_add_sequence: true,
+		deletable: false,
+		id: null,
+		tags: "",
+		description: ""
+	}
+}
 
+paramsForView = function(view, params) {
+	var p = {}
+	_.extend(p, defaultParams[view], params);
+	return p;
+};
 
 exports.thumb = function(req, res) {
-	var outPath = path.join(config.db_path, "thumb" , req.params.id + "." + req.params.ext);
-	update_image_for_type(req, res, outPath,  "thumb", fetchThumb);	
+	var outPath = link.thumbPath(req.params.id);
+	update_image_for_type(req, res, outPath,  "thumb", fetchThumb);
 };
 
 exports.ico = function(req, res) {
-	var outPath = path.join(config.db_path, "favicon" , req.params.id);
-	update_image_for_type(req, res, outPath, "favicon", fetchFavicon);	
+	var outPath = link.icoPath(req.params.id);
+	update_image_for_type(req, res, outPath, "favicon", fetchFavicon);
 };
 
 
@@ -140,24 +160,18 @@ exports.add = function(req, res) {
 		request(req.query.url, function(err, response, body) {
 			if (!err && response.statusCode == 200) {
 				var $ = cheerio.load(body);
-		 		res.render('link/add', {
-		 			url: req.query.url,
-		 			url_title: $("title").text(),
-		 			tags: "",
-		 			description: "",
-		 			in_add_sequence: true,
-		 			in_update_sequence: false
-		 		});
+		 		res.render('link/add',
+		 			paramsForView('link/add', {
+			 			url: req.query.url,
+			 			url_title: $("title").text()
+			 		}));
 			} else {
 				console.log(err);
-				res.render('link/add', {
-					url: req.query.url,
-					url_title: "Unable to fetch title",
-					tags: "",
-					description: "",
-					in_add_sequence: true,
-					in_update_sequence: false
-				});
+				res.render('link/add',
+					paramsForView('link/add', {
+						url: req.query.url,
+						url_title: "Unable to fetch title"
+					}));
 			}
 		});
 	} else {
@@ -168,23 +182,44 @@ exports.add = function(req, res) {
 exports.edit = function(req, res) {
 	db.db.one(function (doc) { if (doc.id == req.params.id) return doc; }, function(doc) {
 		if(doc) {
-			res.render('link/add', {
-				id: doc.id,
-				url: doc.url,
-				url_title: doc.title,
-				tags: (doc.tags && doc.tags.join(" "))|| "",
-				description: doc.text && doc.text || "",
-				in_update_sequence: true
-			});
-
+			res.render('link/add',
+				paramsForView('link/add', {
+					id: doc.id,
+					url: doc.url,
+					url_title: doc.title,
+					tags: (doc.tags && doc.tags.join(" "))|| "",
+					description: doc.text && doc.text || "",
+					title: "Edit " + doc.title,
+					deletable: true,
+					in_add_sequence: false,
+					in_update_sequence: true
+				}));
 		} else {
 			res.send(404, 'Sorry, we cannot find that!');
 		}
 	});
 }
 
+exports.del = function(req, res) {
+	var id = req.body.id;
+	db.db.remove(function(doc) {
+		return (doc.id === id);
+	}, function() {
+		fs.unlink(link.thumbPath(id), function(err) {
+			if (err) throw err;
+			fs.unlink(link.icoPath(id), function(err) {
+				if (err) throw err;
+				db.update_views(function() {
+					res.redirect('/');
+				});
+			});
+		});
+	});
+}
+
 exports.post = function(req, res) {
 	var parms = req.body;
+	console.log(parms);
 	var post = { url: req.body.url,
 		title: req.body.title,
 	}
@@ -203,14 +238,12 @@ exports.post = function(req, res) {
 	if (req.body.id == null) {
 		post.date_created = new Date();
 		post.id = smallHash(JSON.stringify(post));
-		fetchImage(post, 'thumb', fetchThumb);
 		db.db.insert(post, function(count) {
 				db.update_views();
 				res.redirect('/#highlight='+post.id);
 		}, "Creating link for " + post.url);
 	} else {
 		post.id = req.body.id;
-		fetchImage(post, 'thumb', fetchThumb);
 		db.db.update(function (doc) { if (doc.id == post.id) return post; return doc; }, function(count) {
 				db.update_views();
 		    res.redirect('/#highlight='+post.id);

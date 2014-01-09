@@ -1,7 +1,6 @@
-<% var title = 'Add a new link' %>
 <% include ../head %>
     <form class='add-form1' method="POST" action='/add'>
-        <% if (in_update_sequence) {%><input type="hidden" name="id" value="<%= id %>"/><% } %>
+        <% if (id) {%><input type="hidden" name="id" value="<%= id %>"/><% } %>
         <div class="metal padded">
             <h3>Add a new link</h3>
             <div class="row">
@@ -36,8 +35,11 @@
             <div class="row">
                 <textarea name="text" class="erasable" type="text" placeholder="Lorem ipsum"><%= description %></textarea>
             </div>
-            <div class="row button-row-right">
+            <div class="row">
                 <button class="btn green" type="submit"><% if (in_update_sequence) {%>Update Link<% } else { %>Add Link<% } %></button>
+                <% if (deletable) {%>
+                    <button class="btn red" type="submit" formaction="/delete" value="delete">Delete</button>
+                <% } %>
             </div>
         </div>
       </form>

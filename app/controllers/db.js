@@ -9,12 +9,12 @@ var fs = require("fs"),
 
 var db = require('nosql').load(config.db_file);
 
-exports.update_views = function() {
+exports.update_views = function(cb) {
   db.views.create('latest', function(d) { return d;}, function(a,b) {
     if (a.date_updated < b.date_updated)
       return 1;
     return -1;
-  });
+  }, cb);
 };
 
 
