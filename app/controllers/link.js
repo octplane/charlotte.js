@@ -175,7 +175,9 @@ exports.add = function(req, res) {
 			}
 		});
 	} else {
-		res.render('link/add', { url: req.query.url, tags:"", in_add_sequence: true, in_update_sequence: false, description: "", url_title: req.query.title});
+		res.render('link/add',
+			paramsForView('link/add',
+				{ url: req.query.url, url_title: req.query.title}));
 	}
 };
 
