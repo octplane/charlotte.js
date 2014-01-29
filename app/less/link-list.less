@@ -2,71 +2,85 @@
 
 
 .link-list {
-	.link {
-		position: relative;
-		padding: 20px;
-		border-top: 1px solid lightgrey;
-		padding-bottom: 30px;
-		min-height: 180px;
-	}
-	.header {
-		position: relative;
-		left: 0px;
-		border: 1px solid green;
-		width: 100px;
-		background-color: white;
-	}
-	.identifier {
-		font-size: 20px;
-		text-align: center;
-		background-color: green;
-		color: white;
-	}
-	.date {
-		color: green;
-		text-align: center;
-		font-weight: bold;
-	}
-	h3 {
-		position: absolute;
-		margin: 0px;
-		left: 120px;
-		top:	10px;
-		right:	220px;
-		vertical-align: top;
-		display: inline-block;
-	}
-	h3.large {
-		font-size: 2em;
-		top: 20px;
-		text-align: center;
-	}
-	a, a:visited {
+
+	a:hover, a:visited {
 		color: inherit;
 	}
-	.text {
+
+	.link {
+		margin-bottom: 30px;
 		position: relative;
-		left: 130px;
-		top: 20px;
+		width: 600px;
+		float: left;
+		margin: 10px;
+	}
+
+	.thumb {
+		width: 200px;
+		height: 150px;
+		position: relative;
+		img.f {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			width: 32px;
+			height: 32px;
+
+		}
+		img.i {
+			position: relative;
+		}
+	}
+	.header {
+		width: 200px;
+		position: relative;
+		.identifier {
+			background-color: green;
+			color: white;
+			display: inline;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.date {
+			position: absolute;
+			right: 0px;
+			display: inline;
+			text-align: right;
+			margin-right: 10px;
+		}
+	}
+	.info {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		width: 380px;
+		.large {
+			text-align: center;
+		}
+	}
+	.text {
+		position:absolute;
+		top: 0px;
+		bottom: 24px;
+		left: 0px;
+		right: 0px;
+		overflow-y: scroll;
 	}
 	.tags {
+		background-color: rgba(255,255,255,0.4);
 		position: absolute;
-		right: 250px;
-	}
-	@tagColor: #3A3;
-	.tag {
-		border: 1px solid #3A3;
-		color: #3A3;
-		margin: 3px;
-		border-radius: 3px;
-		font-style: italic;
-
-	}
-	img.i {
-		position: absolute;
+		bottom: 0px;
+		left: 10px;
 		right: 10px;
-		top: 10px;
+		height: 20px;
+
+		.tag {
+			display: inline;
+			border: 1px solid lightgrey;
+			padding: 2px;
+			border-radius: 3px;
+			margin-left: 3px;
+		}
 	}
-
-
 }

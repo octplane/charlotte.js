@@ -69,8 +69,8 @@ fetchFavicon = function(url, outPath, cb) {
 					}
 				});
 			} else {
-				console.log("Failed finding favicon for "+url)
-				cb && cb(null, null);
+				var msg = "Failed finding favicon for " + url;
+				cb && cb(msg, null);
 			}
 		} else {
 			console.log("ico, failed" + err);
@@ -110,7 +110,7 @@ update_image_for_type = function(req, res, outPath, type, fetchMethod) {
 					});
 				} else {
 					if(doc && doc[disable_type]) {
-						console.log("Date.now=" + Date.now() + " < " + doc[disable_type] + ": Thumb disabled for " +  doc.url);
+						console.log("Disabled for " +  (doc[disable_type] - Date.now())/1000 + " more seconds (" +  doc.url + ").");
 					}
 				}
 			});

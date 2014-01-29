@@ -38,6 +38,7 @@ $(function() {
 $(function(){
   $.adaptiveBackground.run(
     {
+        parent: ".link",
         normalizeTextColor: true,
         normalizedTextColors: {dark: '#222', light: '#ddd'}
     });

@@ -3,34 +3,47 @@
 
 <% links.forEach(function(el, index) { %>
 <div class='link'>
+	<div class='thumb'>
+		<a href="<%= el.url %>">
+			<img data-adaptive-background='1' class="i" src="/i/t/<%= el.id %>.jpg" width="200" />
+			<img class="f" src="/i/f/<%= el.id %>"/>
+		</a>
+	</div>
+
 	<div class="header">
-	<div class='identifier'><%= el.id %></div>
-	<div class="date"><%= el.since %>
-	<% if (el.private) { %>
-	<div class="public"></div>
-	<% } else { %>
-	<div class="private"></div><%
-	} %>
+		<a href="<%= el.url %>">
+			<div class='identifier'><%= el.id %></div>
+			<div class="date"><%= el.since %>
+			<% if (el.private) { %>
+			<div class="public"></div>
+			<% } else { %>
+			<div class="private"></div><%
+			} %>
 
-	<% if (me) { %>
-		<a href="/edit/<%= el.id %>">Edit</a>
-	<% } %>
+			<% if (me) { %>
+				<a href="/edit/<%= el.id %>">Edit</a>
+			<% } %>
 
-	</div></div>
+			</div>
+		</a>
+	</div>
 
-<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><img width="16" src="/i/f/<%= el.id %>"/><%= el.title %></a></h3>
-<% if (el.text) { %>
-<div class="text"><%- el.text %></div>
-<% } %>
-<img data-adaptive-background='1' class="i" src="/i/t/<%= el.id %>.jpg" width="200">
-<% if (el.tags) {%>
-<div class="tags">
-	<% el.tags.forEach(function(tag, ix) {
-	%><div class="tag">#<%= tag %></div><%
-	});
-	%>
-</div>
-<% } %>
+	<div class="info">
+
+		<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><%= el.title %></a></h3>
+		<% if (el.text) { %>
+		<div class="text"><%- el.text %></div>
+		<% } %>
+
+		<% if (el.tags) {%>
+		<div class="tags">
+			<% el.tags.forEach(function(tag, ix) {
+			%><div class="tag">#<%= tag %></div><%
+			});
+			%>
+		</div>
+		<% } %>
+	</div>
 </div>
 
 <% }); %>
