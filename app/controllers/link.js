@@ -271,7 +271,7 @@ exports.rss = function(req, res) {
 			selected.forEach(function(item) {
 				feed.item({
 					title: item.title,
-					guid: site_url + "view/" + item.id,
+					url: site_url + "view/" + item.id,
 					date: item.created_at,
 					description: item.text
 				});
