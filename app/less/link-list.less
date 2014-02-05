@@ -9,16 +9,31 @@
 
 	.link {
 		margin-bottom: 30px;
+		height: 182px;
 		position: relative;
 		width: 600px;
 		float: left;
 		margin: 10px;
 	}
 
+	.info {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		left: 200px;
+		padding-left: 10px;
+		.large {
+			text-align: center;
+		}
+	}
+
 	.thumb {
 		width: 200px;
 		height: 150px;
-		position: relative;
+		left: 0px;
+		top: 0px;
+		position: absolute;
 		img.f {
 			position: absolute;
 			bottom: 10px;
@@ -32,12 +47,23 @@
 		}
 	}
 	.header {
-		width: 200px;
-		position: relative;
+		bottom: 0px;
+		height: 32px;
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		a.id {
+			position: absolute;
+			left: 0px;
+			bottom: 0px;
+			height: 32px;
+			width: 200px;
+		}
 		.identifier {
 			background-color: green;
 			color: white;
-			display: inline;
+			display: inline-block;
+			height: 100%;
 			padding-left: 10px;
 			padding-right: 10px;
 		}
@@ -49,18 +75,8 @@
 			margin-right: 10px;
 		}
 	}
-	.info {
-		position: absolute;
-		right: 0px;
-		top: 0px;
-		bottom: 0px;
-		width: 380px;
-		.large {
-			text-align: center;
-		}
-	}
+
 	.text {
-		position:absolute;
 		top: 0px;
 		bottom: 24px;
 		left: 0px;
@@ -71,9 +87,9 @@
 		background-color: rgba(255,255,255,0.4);
 		position: absolute;
 		bottom: 0px;
-		left: 10px;
+		left: 200px;
 		right: 10px;
-		height: 20px;
+		height: 32px;
 
 		.tag {
 			display: inline;

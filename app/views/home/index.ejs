@@ -3,6 +3,7 @@
 
 <% links.forEach(function(el, index) { %>
 <div class='link'>
+
 	<div class='thumb'>
 		<a href="<%= el.url %>">
 			<img data-adaptive-background='1' class="i" src="/i/t/<%= el.id %>.jpg" width="200" />
@@ -10,8 +11,16 @@
 		</a>
 	</div>
 
+
+	<div class="info">
+		<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><%= el.title %></a></h3>
+		<% if (el.text) { %>
+		<div class="text"><%- el.text %></div>
+		<% } %>
+	</div>
+
 	<div class="header">
-		<a href="<%= el.url %>">
+		<a class="id" href="<%= el.url %>">
 			<div class='identifier'><%= el.id %></div>
 			<div class="date"><%= el.since %>
 			<% if (el.private) { %>
@@ -26,15 +35,6 @@
 
 			</div>
 		</a>
-	</div>
-
-	<div class="info">
-
-		<h3 <%- el.text==null?'class="large"':'' %>><a href="<%= el.url %>"><%= el.title %></a></h3>
-		<% if (el.text) { %>
-		<div class="text"><%- el.text %></div>
-		<% } %>
-
 		<% if (el.tags) {%>
 		<div class="tags">
 			<% el.tags.forEach(function(tag, ix) {
@@ -44,6 +44,7 @@
 		</div>
 		<% } %>
 	</div>
+
 </div>
 
 <% }); %>
